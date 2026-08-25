@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Портфолио QA-инженера | Филипп</title>
+    <title>Портфолио QA-инженера | Леонид</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -136,18 +136,21 @@
         }
 
         .logo {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--text-primary);
+            white-space: nowrap;
         }
         .logo span {
             color: var(--accent);
         }
 
         .nav-links {
+            flex: 1;
             display: flex;
+            justify-content: space-evenly;
             align-items: center;
-            gap: 32px;
+            margin: 0 20px;
         }
 
         .nav-links a {
@@ -193,7 +196,7 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             transition: all var(--transition);
         }
 
@@ -758,6 +761,9 @@
                 transform: translateY(-120%);
                 transition: transform 0.4s ease;
                 backdrop-filter: blur(12px);
+                flex: none;
+                justify-content: flex-start;
+                margin: 0;
             }
             .nav-links.open {
                 transform: translateY(0);
@@ -812,8 +818,10 @@
     <!-- ===== HEADER ===== -->
     <header>
         <div class="container nav">
-            <a href="#" class="logo">&lt;<span>qa</span>/&gt;</a>
+            <!-- Логотип изменён на "Quality Assurance" -->
+            <a href="#" class="logo"><span>Quality Assurance</span></a>
 
+            <!-- Меню растянуто с помощью flex:1 и justify-content:space-evenly -->
             <ul class="nav-links" id="navLinks">
                 <li><a href="#about">Обо мне</a></li>
                 <li><a href="#skills">Навыки</a></li>
@@ -823,8 +831,9 @@
             </ul>
 
             <div class="nav-actions">
+                <!-- Кнопка темы с иконкой fa-circle-half-stroke -->
                 <button class="theme-toggle" id="themeToggle" aria-label="Сменить тему">
-                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-circle-half-stroke"></i>
                 </button>
                 <button class="hamburger" id="hamburger" aria-label="Меню">
                     <span></span><span></span><span></span>
@@ -842,7 +851,8 @@
                 </div>
                 <h1>
                     Привет, я <br />
-                    <span class="highlight">Филипп</span>
+                    <!-- Имя изменено на Леонид -->
+                    <span class="highlight">Леонид</span>
                 </h1>
                 <p>
                     QA-инженер (Web/API) Middle. Специализируюсь на функциональном,
@@ -874,8 +884,8 @@
             <div class="hero-image">
                 <div class="hero-avatar">
                     <div class="ring"></div>
-                    <!-- Исправлено: Photo.jpg (было .jpeg) -->
-                    <img src="images/Photo.jpg" alt="Фото Филиппа" />
+                    <!-- Фото Photo.jpg -->
+                    <img src="images/Photo.jpg" alt="Фото Леонида" />
                 </div>
             </div>
         </div>
@@ -901,7 +911,7 @@
                     Стремлюсь развиваться в автоматизации, уже имею опыт написания коллекций с автотестами в Postman.
                 </p>
 
-                <!-- ВСТАВЛЕННОЕ ФОТО UNTITLED.PNG (оставляем как есть) -->
+                <!-- Фото Untitled.png -->
                 <div class="photo-block">
                     <img src="images/Untitled.png" alt="Дополнительное фото" />
                 </div>
@@ -1158,8 +1168,9 @@
     <!-- ===== FOOTER ===== -->
     <footer>
         <div class="container">
+            <!-- Имя в футере изменено на Леонид -->
             <p>
-                &copy; 2026 <span>Филипп</span> · QA-инженер · Сделано с <i class="fas fa-heart" style="color: var(--accent);"></i>
+                &copy; 2026 <span>Леонид</span> · QA-инженер · Сделано с <i class="fas fa-heart" style="color: var(--accent);"></i>
             </p>
         </div>
     </footer>
@@ -1172,7 +1183,8 @@
         const currentTheme = localStorage.getItem('theme') || 'light';
         if (currentTheme === 'dark') {
             document.documentElement.setAttribute('data-theme', 'dark');
-            icon.classList.replace('fa-moon', 'fa-sun');
+            icon.classList.replace('fa-circle-half-stroke', 'fa-circle-half-stroke');
+            // можно также повернуть иконку для индикации, но оставим как есть
         }
 
         themeToggle.addEventListener('click', () => {
@@ -1180,11 +1192,10 @@
             if (theme === 'dark') {
                 document.documentElement.removeAttribute('data-theme');
                 localStorage.setItem('theme', 'light');
-                icon.classList.replace('fa-sun', 'fa-moon');
+                // иконка уже fa-circle-half-stroke, она не меняется
             } else {
                 document.documentElement.setAttribute('data-theme', 'dark');
                 localStorage.setItem('theme', 'dark');
-                icon.classList.replace('fa-moon', 'fa-sun');
             }
         });
 
