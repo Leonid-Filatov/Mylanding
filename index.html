@@ -328,8 +328,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 8rem;
-            color: var(--accent);
             box-shadow: 0 20px 60px rgba(99, 102, 241, 0.25);
             position: relative;
             overflow: hidden;
@@ -345,8 +343,7 @@
         }
 
         @keyframes pulse-ring {
-            0%,
-            100% {
+            0%, 100% {
                 transform: scale(1);
                 opacity: 0.2;
             }
@@ -354,6 +351,13 @@
                 transform: scale(1.05);
                 opacity: 0.1;
             }
+        }
+
+        .hero-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
         }
 
         .hero-stats {
@@ -385,6 +389,18 @@
             color: var(--text-secondary);
             margin-bottom: 16px;
             font-size: 1.05rem;
+        }
+
+        .about-text .photo-block {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .about-text .photo-block img {
+            max-width: 80%;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
         }
 
         .about-info {
@@ -858,7 +874,8 @@
             <div class="hero-image">
                 <div class="hero-avatar">
                     <div class="ring"></div>
-                    <i class="fas fa-user-astronaut"></i>
+                    <!-- ВНИМАНИЕ: если ваш файл Photo.jpg — замените .jpeg на .jpg -->
+                    <img src="images/Photo.jpeg" alt="Фото Филиппа" />
                 </div>
             </div>
         </div>
@@ -883,6 +900,12 @@
                     Разрабатываю и поддерживаю тестовую документацию, оптимизирую процессы регрессии, участвую в Scrum.
                     Стремлюсь развиваться в автоматизации, уже имею опыт написания коллекций с автотестами в Postman.
                 </p>
+
+                <!-- ВСТАВЛЕННОЕ ФОТО UNTITLED.PNG -->
+                <div class="photo-block">
+                    <img src="images/Untitled.png" alt="Дополнительное фото" />
+                </div>
+
                 <ul class="about-info">
                     <li><i class="fas fa-map-pin"></i> Россия, удалённо</li>
                     <li><i class="fas fa-graduation-cap"></i> Ярославский градостроительный колледж</li>
