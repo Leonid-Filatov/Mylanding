@@ -44,7 +44,6 @@
             --shadow-hover: 0 8px 40px rgba(99, 102, 241, 0.15);
             --radius: 16px;
             --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            /* Плавный переход темы (#10) */
             --theme-transition: 0.6s ease;
             --font: 'Inter', sans-serif;
         }
@@ -64,8 +63,7 @@
 
         html { scroll-behavior: smooth; }
 
-        /* ===== ПЛАВНЫЙ ПЕРЕХОД ТЕМЫ (#10) =====
-           transition добавлен на все элементы, меняющие цвет при смене темы */
+        /* ===== ПЛАВНЫЙ ПЕРЕХОД ТЕМЫ ===== */
         body,
         header,
         section,
@@ -100,7 +98,6 @@
         .chip,
         .leaf,
         #toast,
-        #backToTop,
         #scrollArrows button {
             transition: background-color var(--theme-transition),
                         color var(--theme-transition),
@@ -110,14 +107,11 @@
                         stroke var(--theme-transition);
         }
 
-        /* Для интерактивных элементов оставляем более быструю анимацию hover,
-           но цвет темы они всё равно меняют плавно */
         .btn,
         .theme-toggle,
         .season-toggle,
         .copy-btn,
         .social-links a,
-        #backToTop,
         #scrollArrows button,
         .chip {
             transition: background-color var(--theme-transition),
@@ -509,48 +503,7 @@
             width: 18px;
         }
 
-        /* ===== SKILLS ===== */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 24px;
-            margin-top: 40px;
-        }
-
-        .skill-card,
-        .project-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            transition: box-shadow var(--theme-transition),
-                        border-color var(--theme-transition),
-                        background-color var(--theme-transition),
-                        transform 0.15s ease-out;
-            transform-style: preserve-3d;
-            will-change: transform;
-        }
-        .skill-card { padding: 24px; text-align: center; }
-        .skill-card:hover,
-        .project-card:hover {
-            box-shadow: var(--shadow-hover);
-            border-color: var(--accent);
-        }
-        .skill-card .icon {
-            font-size: 2.4rem;
-            color: var(--accent);
-            margin-bottom: 12px;
-        }
-        .skill-card h4 {
-            font-weight: 600;
-            margin-bottom: 4px;
-            font-size: 1rem;
-        }
-        .skill-card p {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        /* ===== EXPERIENCE ===== */
+        /* ===== EXPERIENCE (перенесено наверх) ===== */
         .timeline {
             margin-top: 40px;
             display: flex;
@@ -660,6 +613,47 @@
             font-size: 0.9rem;
         }
         .timeline-item .result strong { color: var(--accent); }
+
+        /* ===== SKILLS ===== */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .skill-card,
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition: box-shadow var(--theme-transition),
+                        border-color var(--theme-transition),
+                        background-color var(--theme-transition),
+                        transform 0.15s ease-out;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+        .skill-card { padding: 24px; text-align: center; }
+        .skill-card:hover,
+        .project-card:hover {
+            box-shadow: var(--shadow-hover);
+            border-color: var(--accent);
+        }
+        .skill-card .icon {
+            font-size: 2.4rem;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+        .skill-card h4 {
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-size: 1rem;
+        }
+        .skill-card p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
 
         /* ===== PROJECTS ===== */
         .projects-grid {
@@ -929,8 +923,6 @@
 
         /* ============================================================
            СТРЕЛКИ НАВИГАЦИИ ВВЕРХ/ВНИЗ
-           Одна кнопка показывается, когда мы в hero (вниз),
-           другая — когда мы ниже (вверх)
            ============================================================ */
         #scrollArrows {
             position: fixed;
@@ -976,12 +968,8 @@
             box-shadow: 0 10px 24px rgba(99, 102, 241, 0.35);
         }
 
-        /* Иконка со стрелкой плавно «дышит», когда кнопка в покое */
         #scrollArrows button i {
             animation: arrow-bounce 2s ease-in-out infinite;
-        }
-        #scrollArrows #scrollDown i {
-            animation-delay: 0.2s;
         }
         @keyframes arrow-bounce {
             0%, 100% { transform: translateY(0); }
@@ -1071,10 +1059,11 @@
         <div class="container nav">
             <a href="#" class="logo"><span>Quality Assurance</span></a>
 
+            <!-- Меню: сначала Опыт, потом Навыки -->
             <ul class="nav-links" id="navLinks">
                 <li><a href="#about" data-section="about">Обо мне</a></li>
-                <li><a href="#skills" data-section="skills">Навыки</a></li>
                 <li><a href="#experience" data-section="experience">Опыт</a></li>
+                <li><a href="#skills" data-section="skills">Навыки</a></li>
                 <li><a href="#projects" data-section="projects">Проекты</a></li>
                 <li><a href="#contact" data-section="contact">Контакты</a></li>
             </ul>
@@ -1140,6 +1129,7 @@
         </div>
     </section>
 
+    <!-- ===== ABOUT ===== -->
     <section id="about">
         <div class="container about-grid">
             <div class="about-text">
@@ -1196,57 +1186,7 @@
         </div>
     </section>
 
-    <section id="skills" style="background: var(--bg-secondary);">
-        <div class="container">
-            <span class="section-label">Навыки</span>
-            <h2 class="section-title">Мой <span>инструментарий</span></h2>
-            <p class="section-desc">Технологии, которые я использую ежедневно для обеспечения качества.</p>
-
-            <div class="skills-grid">
-                <div class="skill-card tilt-card">
-                    <div class="icon"><i class="fas fa-vial"></i></div>
-                    <h4>Функциональное тестирование</h4>
-                    <p>Smoke, регресс, интеграционное</p>
-                </div>
-                <div class="skill-card tilt-card">
-                    <div class="icon"><i class="fas fa-plug"></i></div>
-                    <h4>API тестирование</h4>
-                    <p>REST, JSON, Swagger, Postman</p>
-                </div>
-                <div class="skill-card tilt-card">
-                    <div class="icon"><i class="fas fa-mobile-alt"></i></div>
-                    <h4>Мобильное тестирование</h4>
-                    <p>Android, iOS (реальные устройства)</p>
-                </div>
-                <div class="skill-card tilt-card">
-                    <div class="icon"><i class="fas fa-database"></i></div>
-                    <h4>SQL & Elasticsearch</h4>
-                    <p>SELECT, UPDATE, Kibana</p>
-                </div>
-                <div class="skill-card tilt-card">
-                    <div class="icon"><i class="fas fa-code-branch"></i></div>
-                    <h4>Инструменты</h4>
-                    <p>Charles, Proxyman, Git, VirtualBox</p>
-                </div>
-                <div class="skill-card tilt-card">
-                    <div class="icon"><i class="fas fa-tasks"></i></div>
-                    <h4>Документирование</h4>
-                    <p>Test IT, Jira, TestRail, Yandex Tracker</p>
-                </div>
-                <div class="skill-card tilt-card">
-                    <div class="icon"><i class="fas fa-paint-brush"></i></div>
-                    <h4>Дизайн и аналитика</h4>
-                    <p>Figma, Miro, DevTools</p>
-                </div>
-                <div class="skill-card tilt-card">
-                    <div class="icon"><i class="fas fa-code"></i></div>
-                    <h4>Автоматизация (изучаю)</h4>
-                    <p>Python, базовые автотесты в Postman</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
+    <!-- ===== EXPERIENCE (перенесено наверх, без bg-secondary) ===== -->
     <section id="experience">
         <div class="container">
             <span class="section-label">Опыт работы</span>
@@ -1310,7 +1250,60 @@
         </div>
     </section>
 
-    <section id="projects" style="background: var(--bg-secondary);">
+    <!-- ===== SKILLS (перенесено вниз, с bg-secondary) ===== -->
+    <section id="skills" style="background: var(--bg-secondary);">
+        <div class="container">
+            <span class="section-label">Навыки</span>
+            <h2 class="section-title">Мой <span>инструментарий</span></h2>
+            <p class="section-desc">Технологии, которые я использую ежедневно для обеспечения качества.</p>
+
+            <div class="skills-grid">
+                <div class="skill-card tilt-card">
+                    <div class="icon"><i class="fas fa-vial"></i></div>
+                    <h4>Функциональное тестирование</h4>
+                    <p>Smoke, регресс, интеграционное</p>
+                </div>
+                <div class="skill-card tilt-card">
+                    <div class="icon"><i class="fas fa-plug"></i></div>
+                    <h4>API тестирование</h4>
+                    <p>REST, JSON, Swagger, Postman</p>
+                </div>
+                <div class="skill-card tilt-card">
+                    <div class="icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h4>Мобильное тестирование</h4>
+                    <p>Android, iOS (реальные устройства)</p>
+                </div>
+                <div class="skill-card tilt-card">
+                    <div class="icon"><i class="fas fa-database"></i></div>
+                    <h4>SQL & Elasticsearch</h4>
+                    <p>SELECT, UPDATE, Kibana</p>
+                </div>
+                <div class="skill-card tilt-card">
+                    <div class="icon"><i class="fas fa-code-branch"></i></div>
+                    <h4>Инструменты</h4>
+                    <p>Charles, Proxyman, Git, VirtualBox</p>
+                </div>
+                <div class="skill-card tilt-card">
+                    <div class="icon"><i class="fas fa-tasks"></i></div>
+                    <h4>Документирование</h4>
+                    <p>Test IT, Jira, TestRail, Yandex Tracker</p>
+                </div>
+                <div class="skill-card tilt-card">
+                    <div class="icon"><i class="fas fa-paint-brush"></i></div>
+                    <h4>Дизайн и аналитика</h4>
+                    <p>Figma, Miro, DevTools</p>
+                </div>
+                <div class="skill-card tilt-card">
+                    <div class="icon"><i class="fas fa-code"></i></div>
+                    <h4>Автоматизация (изучаю)</h4>
+                    <p>Python, базовые автотесты в Postman</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PROJECTS ===== -->
+    <section id="projects">
         <div class="container">
             <span class="section-label">Проекты</span>
             <h2 class="section-title">Ключевые <span>работы</span></h2>
@@ -1361,7 +1354,8 @@
         </div>
     </section>
 
-    <section id="contact">
+    <!-- ===== CONTACT ===== -->
+    <section id="contact" style="background: var(--bg-secondary);">
         <div class="container">
             <span class="section-label">Контакты</span>
             <h2 class="section-title">Давайте <span>общаться</span></h2>
@@ -1450,7 +1444,7 @@
         <button id="scrollUp" aria-label="Наверх" title="Наверх">
             <i class="fas fa-arrow-up"></i>
         </button>
-        <button id="scrollDown" aria-label="Вниз" title="К следующей секции">
+        <button id="scrollDown" aria-label="В самый низ" title="В самый низ">
             <i class="fas fa-arrow-down"></i>
         </button>
     </div>
@@ -1482,7 +1476,6 @@
         const scrollDownBtn = document.getElementById('scrollDown');
         const navAnchors = document.querySelectorAll('.nav-links a[data-section]');
         const sections = document.querySelectorAll('section[id]');
-        const aboutSection = document.getElementById('about');
 
         let rafId = null;
         function updateScrollUI() {
@@ -1491,12 +1484,11 @@
             const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
             progressBar.style.width = percent + '%';
 
-            // Порог «мы в hero или ниже?»
-            // Берём высоту hero минус 100px — как только вышли за первый экран, показываем «вверх»
+            // Показываем «вверх», когда мы уже вне первого экрана
             const heroEl = document.querySelector('.hero');
             const heroBottom = heroEl ? heroEl.offsetHeight - 100 : 600;
-
             const inHero = scrollTop < heroBottom;
+
             if (inHero) {
                 scrollUpBtn.classList.remove('visible');
                 scrollDownBtn.classList.add('visible');
@@ -1526,16 +1518,15 @@
         });
         updateScrollUI();
 
-        // Клик по стрелке «наверх»
+        // Стрелка «наверх» — к самому верху страницы
         scrollUpBtn.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // Клик по стрелке «вниз» — к секции «Обо мне»
+        // Стрелка «вниз» — в самый низ страницы
         scrollDownBtn.addEventListener('click', () => {
-            const headerOffset = 80;
-            const top = aboutSection.getBoundingClientRect().top + window.pageYOffset - headerOffset;
-            window.scrollTo({ top, behavior: 'smooth' });
+            const docHeight = document.documentElement.scrollHeight;
+            window.scrollTo({ top: docHeight, behavior: 'smooth' });
         });
 
         // ===== MOBILE MENU =====
