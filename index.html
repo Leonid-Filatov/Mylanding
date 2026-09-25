@@ -714,6 +714,31 @@
             color: var(--accent);
         }
 
+        /* ===== CHIPS ===== */
+        .chip {
+            background: var(--accent-light);
+            color: var(--accent);
+            padding: 4px 14px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: background 0.5s ease, box-shadow 0.5s ease, transform 0.3s ease, color 0.5s ease;
+        }
+
+        .chip.glow {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 0 12px rgba(99, 102, 241, 0.45);
+            transform: translateY(-2px);
+        }
+
+        /* ===== COUNTER ===== */
+        #counter {
+            font-variant-numeric: tabular-nums;
+            display: inline-block;
+            min-width: 3.2ch;
+        }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 1024px) {
             .hero-grid {
@@ -873,7 +898,7 @@
                         <p>Крупных проектов</p>
                     </div>
                     <div class="stat">
-                        <h3>1500+</h3>
+                        <h3 id="counter" data-target="1500">100</h3>
                         <p>Тест-кейсов</p>
                     </div>
                 </div>
@@ -927,16 +952,16 @@
                     Всегда открыт к изучению нового — сейчас осваиваю Python для автоматизации.
                 </p>
                 <div style="margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap;">
-                    <span style="background: var(--accent-light); color: var(--accent); padding: 4px 14px; border-radius: 100px; font-size: 0.8rem; font-weight: 500;">Postman</span>
-                    <span style="background: var(--accent-light); color: var(--accent); padding: 4px 14px; border-radius: 100px; font-size: 0.8rem; font-weight: 500;">Swagger</span>
-                    <span style="background: var(--accent-light); color: var(--accent); padding: 4px 14px; border-radius: 100px; font-size: 0.8rem; font-weight: 500;">Test IT</span>
-                    <span style="background: var(--accent-light); color: var(--accent); padding: 4px 14px; border-radius: 100px; font-size: 0.8rem; font-weight: 500;">Charles</span>
-                    <span style="background: var(--accent-light); color: var(--accent); padding: 4px 14px; border-radius: 100px; font-size: 0.8rem; font-weight: 500;">Elasticsearch</span>
-                    <span style="background: var(--accent-light); color: var(--accent); padding: 4px 14px; border-radius: 100px; font-size: 0.8rem; font-weight: 500;">Kibana</span>
-                    <span style="background: var(--accent-light); color: var(--accent); padding: 4px 14px; border-radius: 100px; font-size: 0.8rem; font-weight: 500;">SQL</span>
-                    <span style="background: var(--accent-light); color: var(--accent); padding: 4px 14px; border-radius: 100px; font-size: 0.8rem; font-weight: 500;">Git</span>
-                    <span style="background: var(--accent-light); color: var(--accent); padding: 4px 14px; border-radius: 100px; font-size: 0.8rem; font-weight: 500;">Jira</span>
-                    <span style="background: var(--accent-light); color: var(--accent); padding: 4px 14px; border-radius: 100px; font-size: 0.8rem; font-weight: 500;">TestRail</span>
+                    <span class="chip">Postman</span>
+                    <span class="chip">Swagger</span>
+                    <span class="chip">Test IT</span>
+                    <span class="chip">Charles</span>
+                    <span class="chip">Elasticsearch</span>
+                    <span class="chip">Kibana</span>
+                    <span class="chip">SQL</span>
+                    <span class="chip">Git</span>
+                    <span class="chip">Jira</span>
+                    <span class="chip">TestRail</span>
                 </div>
             </div>
         </div>
@@ -1037,7 +1062,7 @@
                     </div>
                 </div>
 
-                <!-- STRONG TEAM (объединяем все проекты) -->
+                <!-- STRONG TEAM -->
                 <div class="timeline-item">
                     <span class="year">Авг 2023 — Фев 2025</span>
                     <h3>QA Manual</h3>
@@ -1060,8 +1085,6 @@
                         Росбанк (внутреннее приложение), БКС (инвестиции, страхование, QR-код), ТВ‑приложение.
                     </div>
                 </div>
-
-                <!-- Блок стажировки УДАЛЁН -->
 
             </div>
         </div>
@@ -1086,7 +1109,7 @@
                 </div>
 
                 <div class="project-card">
-                    <div class="icon"><i class="fas fa-portal"></i></div>
+                    <div class="icon"><i class="fas fa-users"></i></div>
                     <h3>PORTAL</h3>
                     <div class="sub">Внутреннее приложение компании (монолит)</div>
                     <p>Ручное тестирование Web, Android, iOS. Создание 500+ тест-кейсов, API-коллекция из 210 запросов с автотестами.</p>
@@ -1185,7 +1208,7 @@
     <footer>
         <div class="container">
             <p>
-                &copy; 2026 <span>Леонид</span> · QA-инженер · Сделано с <i class="fas fa-heart" style="color: var(--accent);"></i>
+                &copy; 2026 <span>Леонид</span> · QA-инженер
             </p>
         </div>
     </footer>
@@ -1255,6 +1278,47 @@
             alert('Спасибо, ' + name + '! Ваше сообщение отправлено. Я свяжусь с вами в ближайшее время.');
             this.reset();
         });
+
+        // ===== COUNTER ANIMATION =====
+        const counter = document.getElementById('counter');
+        if (counter) {
+            const target = +counter.dataset.target;
+            const duration = 1500;
+            let started = false;
+
+            const counterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !started) {
+                        started = true;
+                        const startTime = performance.now();
+
+                        const tick = (now) => {
+                            const elapsed = now - startTime;
+                            const progress = Math.min(elapsed / duration, 1);
+                            // easeOutCubic
+                            const eased = 1 - Math.pow(1 - progress, 3);
+                            counter.textContent = Math.floor(100 + (target - 100) * eased) + '+';
+                            if (progress < 1) requestAnimationFrame(tick);
+                        };
+
+                        requestAnimationFrame(tick);
+                        counterObserver.disconnect();
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            counterObserver.observe(counter);
+        }
+
+        // ===== CHIP GLOW ANIMATION =====
+        const chips = document.querySelectorAll('.chip');
+        if (chips.length) {
+            setInterval(() => {
+                const randomChip = chips[Math.floor(Math.random() * chips.length)];
+                randomChip.classList.add('glow');
+                setTimeout(() => randomChip.classList.remove('glow'), 900);
+            }, 1200);
+        }
 
         // ===== REVEAL ANIMATION =====
         const cards = document.querySelectorAll('.skill-card, .project-card, .timeline-item');
