@@ -9,7 +9,6 @@
     <meta name="author" content="Леонид Филатов" />
     <meta name="theme-color" content="#6366f1" />
 
-    <!-- Open Graph без картинки (Telegram подтянет из og:title / og:description) -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Леонид — QA-инженер" />
     <meta property="og:description" content="2.5 года опыта в QA. Web/API, микросервисы, FinTech. Ищу команду для роста в автоматизацию." />
@@ -45,6 +44,8 @@
             --shadow-hover: 0 8px 40px rgba(99, 102, 241, 0.15);
             --radius: 16px;
             --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            /* Плавный переход темы (#10) */
+            --theme-transition: 0.6s ease;
             --font: 'Inter', sans-serif;
         }
 
@@ -63,12 +64,74 @@
 
         html { scroll-behavior: smooth; }
 
+        /* ===== ПЛАВНЫЙ ПЕРЕХОД ТЕМЫ (#10) =====
+           transition добавлен на все элементы, меняющие цвет при смене темы */
+        body,
+        header,
+        section,
+        footer,
+        .btn,
+        .theme-toggle,
+        .season-toggle,
+        .hamburger span,
+        .logo,
+        .nav-links a,
+        .badge,
+        .hero-avatar,
+        .hero-avatar .ring,
+        .about-info li i,
+        .skill-card,
+        .skill-card .icon,
+        .project-card,
+        .project-card .icon,
+        .project-card .tags span,
+        .timeline-item,
+        .timeline-item .year,
+        .timeline-item .company,
+        .timeline-item .result,
+        .timeline-item ul,
+        .contact-item .icon,
+        .copy-btn,
+        .social-links a,
+        .contact-form,
+        .contact-form input,
+        .contact-form textarea,
+        .contact-form label,
+        .chip,
+        .leaf,
+        #toast,
+        #backToTop,
+        #scrollArrows button {
+            transition: background-color var(--theme-transition),
+                        color var(--theme-transition),
+                        border-color var(--theme-transition),
+                        box-shadow var(--theme-transition),
+                        fill var(--theme-transition),
+                        stroke var(--theme-transition);
+        }
+
+        /* Для интерактивных элементов оставляем более быструю анимацию hover,
+           но цвет темы они всё равно меняют плавно */
+        .btn,
+        .theme-toggle,
+        .season-toggle,
+        .copy-btn,
+        .social-links a,
+        #backToTop,
+        #scrollArrows button,
+        .chip {
+            transition: background-color var(--theme-transition),
+                        color var(--theme-transition),
+                        border-color var(--theme-transition),
+                        box-shadow var(--theme-transition),
+                        transform 0.2s ease;
+        }
+
         body {
             font-family: var(--font);
             background: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
-            transition: background var(--transition), color var(--transition);
             overflow-x: hidden;
         }
 
@@ -149,7 +212,6 @@
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border);
-            transition: background var(--transition), border var(--transition);
         }
 
         .nav {
@@ -178,7 +240,6 @@
             font-size: 0.9rem;
             font-weight: 500;
             color: var(--text-secondary);
-            transition: color var(--transition);
             position: relative;
             padding: 4px 0;
         }
@@ -213,7 +274,6 @@
             justify-content: center;
             cursor: pointer;
             font-size: 1.2rem;
-            transition: all var(--transition);
         }
         .theme-toggle:hover {
             background: var(--accent);
@@ -244,7 +304,6 @@
             height: 2px;
             background: var(--text-primary);
             border-radius: 4px;
-            transition: all var(--transition);
         }
 
         /* ===== HERO ===== */
@@ -314,7 +373,6 @@
             font-size: 0.95rem;
             border: 1px solid var(--border);
             cursor: pointer;
-            transition: background var(--transition), border-color var(--transition), box-shadow var(--transition), transform 0.15s ease-out;
             background: var(--bg-card);
             color: var(--text-primary);
             will-change: transform;
@@ -464,7 +522,10 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            transition: box-shadow var(--transition), border-color var(--transition), transform 0.15s ease-out;
+            transition: box-shadow var(--theme-transition),
+                        border-color var(--theme-transition),
+                        background-color var(--theme-transition),
+                        transform 0.15s ease-out;
             transform-style: preserve-3d;
             will-change: transform;
         }
@@ -503,9 +564,11 @@
             border-radius: var(--radius);
             padding: 28px 32px;
             overflow: hidden;
-            transition: box-shadow var(--transition), border-color var(--transition);
             background: var(--bg-card);
             isolation: isolate;
+            transition: box-shadow var(--theme-transition),
+                        border-color var(--theme-transition),
+                        background-color var(--theme-transition);
         }
 
         .timeline-item::before {
@@ -531,7 +594,7 @@
                 rgba(255, 255, 255, 0.68) 45%,
                 rgba(255, 255, 255, 0.5) 100%);
             z-index: -1;
-            transition: background 0.4s ease;
+            transition: background 0.6s ease;
             pointer-events: none;
         }
 
@@ -702,7 +765,6 @@
             align-items: center;
             justify-content: center;
             font-size: 0.9rem;
-            transition: all var(--transition);
             flex-shrink: 0;
         }
         .copy-btn:hover {
@@ -735,7 +797,6 @@
             align-items: center;
             justify-content: center;
             color: var(--text-secondary);
-            transition: all var(--transition);
             font-size: 1.1rem;
         }
         .social-links a:hover {
@@ -768,7 +829,6 @@
             color: var(--text-primary);
             font-family: var(--font);
             font-size: 0.95rem;
-            transition: border var(--transition);
             outline: none;
         }
         .contact-form input:focus,
@@ -797,7 +857,6 @@
             border-radius: 100px;
             font-size: 0.8rem;
             font-weight: 500;
-            transition: background 0.5s ease, box-shadow 0.5s ease, transform 0.3s ease, color 0.5s ease;
         }
         .chip.glow {
             background: var(--accent);
@@ -819,7 +878,7 @@
             pointer-events: none;
             overflow: hidden;
             z-index: 1;
-            transition: opacity 0.6s ease;
+            transition: opacity var(--theme-transition);
         }
         #leafLayer.hidden { opacity: 0; pointer-events: none; }
 
@@ -868,11 +927,22 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        /* ===== КНОПКА «НАВЕРХ» ===== */
-        #backToTop {
+        /* ============================================================
+           СТРЕЛКИ НАВИГАЦИИ ВВЕРХ/ВНИЗ
+           Одна кнопка показывается, когда мы в hero (вниз),
+           другая — когда мы ниже (вверх)
+           ============================================================ */
+        #scrollArrows {
             position: fixed;
             right: 24px;
             bottom: 24px;
+            z-index: 1050;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        #scrollArrows button {
             width: 48px;
             height: 48px;
             border-radius: 50%;
@@ -886,22 +956,43 @@
             cursor: pointer;
             box-shadow: var(--shadow);
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(10px) scale(0.9);
             pointer-events: none;
-            transition: all var(--transition);
-            z-index: 1050;
+            transition: opacity 0.4s ease, transform 0.4s ease,
+                        background-color var(--theme-transition),
+                        color var(--theme-transition),
+                        border-color var(--theme-transition),
+                        box-shadow 0.3s ease;
         }
-        #backToTop.show {
+        #scrollArrows button.visible {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
             pointer-events: auto;
         }
-        #backToTop:hover {
+        #scrollArrows button:hover {
             background: var(--accent);
             color: #fff;
             border-color: var(--accent);
-            transform: translateY(-3px);
             box-shadow: 0 10px 24px rgba(99, 102, 241, 0.35);
+        }
+
+        /* Иконка со стрелкой плавно «дышит», когда кнопка в покое */
+        #scrollArrows button i {
+            animation: arrow-bounce 2s ease-in-out infinite;
+        }
+        #scrollArrows #scrollDown i {
+            animation-delay: 0.2s;
+        }
+        @keyframes arrow-bounce {
+            0%, 100% { transform: translateY(0); }
+            50%      { transform: translateY(-2px); }
+        }
+        #scrollArrows #scrollDown i {
+            animation-name: arrow-bounce-down;
+        }
+        @keyframes arrow-bounce-down {
+            0%, 100% { transform: translateY(0); }
+            50%      { transform: translateY(2px); }
         }
 
         /* ===== REDUCED MOTION ===== */
@@ -914,6 +1005,7 @@
             }
             .leaf { display: none; }
             .tilt-card { transform: none !important; }
+            #scrollArrows button i { animation: none; }
         }
 
         /* ===== RESPONSIVE ===== */
@@ -964,7 +1056,8 @@
             .container { padding: 0 16px; }
             section { padding: 60px 0; }
             .leaf { font-size: 16px; }
-            #backToTop { right: 16px; bottom: 16px; width: 44px; height: 44px; }
+            #scrollArrows { right: 16px; bottom: 16px; }
+            #scrollArrows button { width: 44px; height: 44px; }
         }
     </style>
 </head>
@@ -1316,7 +1409,6 @@
                         <i class="fas fa-address-card"></i> Скачать vCard
                     </button>
 
-                    <!-- Оставлена только рабочая ссылка — Telegram -->
                     <div class="social-links">
                         <a href="https://t.me/lenyafeel" target="_blank" rel="noopener" aria-label="Telegram">
                             <i class="fab fa-telegram-plane"></i>
@@ -1353,9 +1445,15 @@
 
     <div id="toast" role="status" aria-live="polite"></div>
 
-    <button id="backToTop" aria-label="Наверх" title="Наверх">
-        <i class="fas fa-arrow-up"></i>
-    </button>
+    <!-- Стрелки навигации вверх/вниз -->
+    <div id="scrollArrows">
+        <button id="scrollUp" aria-label="Наверх" title="Наверх">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <button id="scrollDown" aria-label="Вниз" title="К следующей секции">
+            <i class="fas fa-arrow-down"></i>
+        </button>
+    </div>
 
     <script>
         // ===== THEME =====
@@ -1378,11 +1476,13 @@
             }
         });
 
-        // ===== PROGRESS BAR + BACK-TO-TOP + ACTIVE SECTION =====
+        // ===== PROGRESS BAR + ARROWS + ACTIVE SECTION =====
         const progressBar = document.getElementById('progressBar');
-        const backToTop = document.getElementById('backToTop');
+        const scrollUpBtn = document.getElementById('scrollUp');
+        const scrollDownBtn = document.getElementById('scrollDown');
         const navAnchors = document.querySelectorAll('.nav-links a[data-section]');
         const sections = document.querySelectorAll('section[id]');
+        const aboutSection = document.getElementById('about');
 
         let rafId = null;
         function updateScrollUI() {
@@ -1391,9 +1491,21 @@
             const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
             progressBar.style.width = percent + '%';
 
-            if (scrollTop > 600) backToTop.classList.add('show');
-            else backToTop.classList.remove('show');
+            // Порог «мы в hero или ниже?»
+            // Берём высоту hero минус 100px — как только вышли за первый экран, показываем «вверх»
+            const heroEl = document.querySelector('.hero');
+            const heroBottom = heroEl ? heroEl.offsetHeight - 100 : 600;
 
+            const inHero = scrollTop < heroBottom;
+            if (inHero) {
+                scrollUpBtn.classList.remove('visible');
+                scrollDownBtn.classList.add('visible');
+            } else {
+                scrollDownBtn.classList.remove('visible');
+                scrollUpBtn.classList.add('visible');
+            }
+
+            // Активная секция в меню
             const headerOffset = 100;
             let currentId = null;
             sections.forEach(sec => {
@@ -1409,10 +1521,21 @@
         window.addEventListener('scroll', () => {
             if (rafId === null) rafId = requestAnimationFrame(updateScrollUI);
         }, { passive: true });
+        window.addEventListener('resize', () => {
+            if (rafId === null) rafId = requestAnimationFrame(updateScrollUI);
+        });
         updateScrollUI();
 
-        backToTop.addEventListener('click', () => {
+        // Клик по стрелке «наверх»
+        scrollUpBtn.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Клик по стрелке «вниз» — к секции «Обо мне»
+        scrollDownBtn.addEventListener('click', () => {
+            const headerOffset = 80;
+            const top = aboutSection.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+            window.scrollTo({ top, behavior: 'smooth' });
         });
 
         // ===== MOBILE MENU =====
