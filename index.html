@@ -7,19 +7,17 @@
     <title>Леонид — QA-инженер | Портфолио</title>
     <meta name="description" content="QA-инженер (Web/API) с 2.5 года опыта. Функциональное, регрессионное и интеграционное тестирование микросервисов. FinTech, энергетика, корпоративный сектор." />
     <meta name="author" content="Леонид Филатов" />
+    <meta name="theme-color" content="#6366f1" />
 
+    <!-- Open Graph без картинки (Telegram подтянет из og:title / og:description) -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Леонид — QA-инженер" />
     <meta property="og:description" content="2.5 года опыта в QA. Web/API, микросервисы, FinTech. Ищу команду для роста в автоматизацию." />
     <meta property="og:url" content="https://leonid-filatov.github.io/Mylanding/" />
-    <meta property="og:image" content="https://leonid-filatov.github.io/Mylanding/images/preview.png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="ru_RU" />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Леонид — QA-инженер" />
     <meta name="twitter:description" content="2.5 года опыта в QA. Web/API, микросервисы, FinTech." />
-    <meta name="twitter:image" content="https://leonid-filatov.github.io/Mylanding/images/preview.png" />
 
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%90%9E%3C/text%3E%3C/svg%3E" />
 
@@ -113,6 +111,21 @@
             font-size: 1.1rem;
         }
 
+        /* ===== FADE-IN для заголовков секций ===== */
+        .section-label,
+        .section-title,
+        .section-desc {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .section-label.reveal,
+        .section-title.reveal,
+        .section-desc.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* ===== READING PROGRESS BAR ===== */
         #progressBar {
             position: fixed;
@@ -167,6 +180,7 @@
             color: var(--text-secondary);
             transition: color var(--transition);
             position: relative;
+            padding: 4px 0;
         }
         .nav-links a::after {
             content: '';
@@ -178,6 +192,8 @@
         }
         .nav-links a:hover { color: var(--text-primary); }
         .nav-links a:hover::after { width: 100%; }
+        .nav-links a.active { color: var(--accent); }
+        .nav-links a.active::after { width: 100%; }
 
         .nav-actions {
             display: flex;
@@ -443,16 +459,18 @@
             margin-top: 40px;
         }
 
-        .skill-card {
+        .skill-card,
+        .project-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 24px;
-            text-align: center;
-            transition: all var(--transition);
+            transition: box-shadow var(--transition), border-color var(--transition), transform 0.15s ease-out;
+            transform-style: preserve-3d;
+            will-change: transform;
         }
-        .skill-card:hover {
-            transform: translateY(-6px);
+        .skill-card { padding: 24px; text-align: center; }
+        .skill-card:hover,
+        .project-card:hover {
             box-shadow: var(--shadow-hover);
             border-color: var(--accent);
         }
@@ -485,7 +503,7 @@
             border-radius: var(--radius);
             padding: 28px 32px;
             overflow: hidden;
-            transition: all var(--transition);
+            transition: box-shadow var(--transition), border-color var(--transition);
             background: var(--bg-card);
             isolation: isolate;
         }
@@ -501,6 +519,7 @@
             transform: scale(1.05);
             transition: opacity 0.4s ease, transform 0.6s ease;
             z-index: -2;
+            pointer-events: none;
         }
 
         .timeline-item::after {
@@ -513,6 +532,7 @@
                 rgba(255, 255, 255, 0.5) 100%);
             z-index: -1;
             transition: background 0.4s ease;
+            pointer-events: none;
         }
 
         [data-theme="dark"] .timeline-item::after {
@@ -586,18 +606,7 @@
             margin-top: 40px;
         }
 
-        .project-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 28px;
-            transition: all var(--transition);
-        }
-        .project-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--accent);
-        }
+        .project-card { padding: 28px; }
         .project-card .icon {
             font-size: 2.2rem;
             color: var(--accent);
@@ -814,7 +823,7 @@
         }
         #leafLayer.hidden { opacity: 0; pointer-events: none; }
 
-        header, main, section, footer { position: relative; z-index: 2; }
+        main, section, footer { position: relative; z-index: 2; }
 
         .leaf {
             position: absolute;
@@ -857,6 +866,54 @@
         #toast.show {
             opacity: 1;
             transform: translateX(-50%) translateY(0);
+        }
+
+        /* ===== КНОПКА «НАВЕРХ» ===== */
+        #backToTop {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: all var(--transition);
+            z-index: 1050;
+        }
+        #backToTop.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        #backToTop:hover {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 24px rgba(99, 102, 241, 0.35);
+        }
+
+        /* ===== REDUCED MOTION ===== */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+                scroll-behavior: auto !important;
+            }
+            .leaf { display: none; }
+            .tilt-card { transform: none !important; }
         }
 
         /* ===== RESPONSIVE ===== */
@@ -907,6 +964,7 @@
             .container { padding: 0 16px; }
             section { padding: 60px 0; }
             .leaf { font-size: 16px; }
+            #backToTop { right: 16px; bottom: 16px; width: 44px; height: 44px; }
         }
     </style>
 </head>
@@ -921,11 +979,11 @@
             <a href="#" class="logo"><span>Quality Assurance</span></a>
 
             <ul class="nav-links" id="navLinks">
-                <li><a href="#about">Обо мне</a></li>
-                <li><a href="#skills">Навыки</a></li>
-                <li><a href="#experience">Опыт</a></li>
-                <li><a href="#projects">Проекты</a></li>
-                <li><a href="#contact">Контакты</a></li>
+                <li><a href="#about" data-section="about">Обо мне</a></li>
+                <li><a href="#skills" data-section="skills">Навыки</a></li>
+                <li><a href="#experience" data-section="experience">Опыт</a></li>
+                <li><a href="#projects" data-section="projects">Проекты</a></li>
+                <li><a href="#contact" data-section="contact">Контакты</a></li>
             </ul>
 
             <div class="nav-actions">
@@ -1052,42 +1110,42 @@
             <p class="section-desc">Технологии, которые я использую ежедневно для обеспечения качества.</p>
 
             <div class="skills-grid">
-                <div class="skill-card">
+                <div class="skill-card tilt-card">
                     <div class="icon"><i class="fas fa-vial"></i></div>
                     <h4>Функциональное тестирование</h4>
                     <p>Smoke, регресс, интеграционное</p>
                 </div>
-                <div class="skill-card">
+                <div class="skill-card tilt-card">
                     <div class="icon"><i class="fas fa-plug"></i></div>
                     <h4>API тестирование</h4>
                     <p>REST, JSON, Swagger, Postman</p>
                 </div>
-                <div class="skill-card">
+                <div class="skill-card tilt-card">
                     <div class="icon"><i class="fas fa-mobile-alt"></i></div>
                     <h4>Мобильное тестирование</h4>
                     <p>Android, iOS (реальные устройства)</p>
                 </div>
-                <div class="skill-card">
+                <div class="skill-card tilt-card">
                     <div class="icon"><i class="fas fa-database"></i></div>
                     <h4>SQL & Elasticsearch</h4>
                     <p>SELECT, UPDATE, Kibana</p>
                 </div>
-                <div class="skill-card">
+                <div class="skill-card tilt-card">
                     <div class="icon"><i class="fas fa-code-branch"></i></div>
                     <h4>Инструменты</h4>
                     <p>Charles, Proxyman, Git, VirtualBox</p>
                 </div>
-                <div class="skill-card">
+                <div class="skill-card tilt-card">
                     <div class="icon"><i class="fas fa-tasks"></i></div>
                     <h4>Документирование</h4>
                     <p>Test IT, Jira, TestRail, Yandex Tracker</p>
                 </div>
-                <div class="skill-card">
+                <div class="skill-card tilt-card">
                     <div class="icon"><i class="fas fa-paint-brush"></i></div>
                     <h4>Дизайн и аналитика</h4>
                     <p>Figma, Miro, DevTools</p>
                 </div>
-                <div class="skill-card">
+                <div class="skill-card tilt-card">
                     <div class="icon"><i class="fas fa-code"></i></div>
                     <h4>Автоматизация (изучаю)</h4>
                     <p>Python, базовые автотесты в Postman</p>
@@ -1166,7 +1224,7 @@
             <p class="section-desc">Проекты, в которых я участвовал как QA-инженер.</p>
 
             <div class="projects-grid">
-                <div class="project-card">
+                <div class="project-card tilt-card">
                     <div class="icon"><i class="fas fa-building"></i></div>
                     <h3>РусГидро «Адепт»</h3>
                     <div class="sub">Web-платформа управления строительными проектами</div>
@@ -1177,7 +1235,7 @@
                     </div>
                 </div>
 
-                <div class="project-card">
+                <div class="project-card tilt-card">
                     <div class="icon"><i class="fas fa-users"></i></div>
                     <h3>PORTAL</h3>
                     <div class="sub">Внутреннее приложение компании (монолит)</div>
@@ -1187,7 +1245,7 @@
                     </div>
                 </div>
 
-                <div class="project-card">
+                <div class="project-card tilt-card">
                     <div class="icon"><i class="fas fa-utensils"></i></div>
                     <h3>DOSTAVKA</h3>
                     <div class="sub">Сервис доставки еды (микросервисы)</div>
@@ -1197,7 +1255,7 @@
                     </div>
                 </div>
 
-                <div class="project-card">
+                <div class="project-card tilt-card">
                     <div class="icon"><i class="fas fa-university"></i></div>
                     <h3>БКС / Росбанк</h3>
                     <div class="sub">FinTech-приложения (инвестиции, страхование, QR)</div>
@@ -1258,11 +1316,11 @@
                         <i class="fas fa-address-card"></i> Скачать vCard
                     </button>
 
+                    <!-- Оставлена только рабочая ссылка — Telegram -->
                     <div class="social-links">
-                        <a href="https://t.me/lenyafeel" target="_blank" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
-                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" aria-label="VK"><i class="fab fa-vk"></i></a>
+                        <a href="https://t.me/lenyafeel" target="_blank" rel="noopener" aria-label="Telegram">
+                            <i class="fab fa-telegram-plane"></i>
+                        </a>
                     </div>
                 </div>
 
@@ -1295,6 +1353,10 @@
 
     <div id="toast" role="status" aria-live="polite"></div>
 
+    <button id="backToTop" aria-label="Наверх" title="Наверх">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <script>
         // ===== THEME =====
         const themeToggle = document.getElementById('themeToggle');
@@ -1316,20 +1378,42 @@
             }
         });
 
-        // ===== PROGRESS BAR =====
+        // ===== PROGRESS BAR + BACK-TO-TOP + ACTIVE SECTION =====
         const progressBar = document.getElementById('progressBar');
+        const backToTop = document.getElementById('backToTop');
+        const navAnchors = document.querySelectorAll('.nav-links a[data-section]');
+        const sections = document.querySelectorAll('section[id]');
+
         let rafId = null;
-        function updateProgress() {
+        function updateScrollUI() {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             const docHeight = document.documentElement.scrollHeight - window.innerHeight;
             const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
             progressBar.style.width = percent + '%';
+
+            if (scrollTop > 600) backToTop.classList.add('show');
+            else backToTop.classList.remove('show');
+
+            const headerOffset = 100;
+            let currentId = null;
+            sections.forEach(sec => {
+                const rect = sec.getBoundingClientRect();
+                if (rect.top <= headerOffset + 10) currentId = sec.id;
+            });
+            navAnchors.forEach(a => {
+                a.classList.toggle('active', a.dataset.section === currentId);
+            });
+
             rafId = null;
         }
         window.addEventListener('scroll', () => {
-            if (rafId === null) rafId = requestAnimationFrame(updateProgress);
+            if (rafId === null) rafId = requestAnimationFrame(updateScrollUI);
         }, { passive: true });
-        updateProgress();
+        updateScrollUI();
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
 
         // ===== MOBILE MENU =====
         const hamburger = document.getElementById('hamburger');
@@ -1405,22 +1489,65 @@
             }, 1200);
         }
 
-        // ===== REVEAL =====
-        const cards = document.querySelectorAll('.skill-card, .project-card, .timeline-item');
-        if (cards.length) {
+        // ===== REVEAL ANIMATION =====
+        const revealEls = document.querySelectorAll(
+            '.skill-card, .project-card, .timeline-item, .section-label, .section-title, .section-desc'
+        );
+        if (revealEls.length) {
             const obs = new IntersectionObserver((entries) => {
                 entries.forEach(e => {
                     if (e.isIntersecting) {
-                        e.target.style.opacity = '1';
-                        e.target.style.transform = 'translateY(0)';
+                        if (e.target.classList.contains('section-label') ||
+                            e.target.classList.contains('section-title') ||
+                            e.target.classList.contains('section-desc')) {
+                            e.target.classList.add('reveal');
+                        } else {
+                            e.target.style.opacity = '1';
+                            e.target.style.transform = 'translateY(0)';
+                        }
+                        obs.unobserve(e.target);
                     }
                 });
             }, { threshold: 0.15 });
-            cards.forEach(card => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                obs.observe(card);
+
+            revealEls.forEach(el => {
+                if (!el.classList.contains('section-label') &&
+                    !el.classList.contains('section-title') &&
+                    !el.classList.contains('section-desc')) {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(20px)';
+                    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                }
+                obs.observe(el);
+            });
+        }
+
+        // ===== 3D-TILT КАРТОЧЕК =====
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!prefersReducedMotion) {
+            const TILT_MAX = 6;
+            document.querySelectorAll('.tilt-card').forEach(card => {
+                let raf = null;
+                function onMove(e) {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const px = (x / rect.width) * 2 - 1;
+                    const py = (y / rect.height) * 2 - 1;
+                    const rotY = px * TILT_MAX;
+                    const rotX = -py * TILT_MAX;
+                    if (raf) cancelAnimationFrame(raf);
+                    raf = requestAnimationFrame(() => {
+                        card.style.transform =
+                            `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-4px)`;
+                    });
+                }
+                function onLeave() {
+                    if (raf) cancelAnimationFrame(raf);
+                    card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateY(0)';
+                }
+                card.addEventListener('mousemove', onMove);
+                card.addEventListener('mouseleave', onLeave);
             });
         }
 
