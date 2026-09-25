@@ -48,6 +48,8 @@
             --radius: 16px;
             --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --font: 'Inter', sans-serif;
+            --header-bg: rgba(255, 255, 255, 0.7);
+            --header-border: rgba(226, 232, 240, 0.7);
         }
 
         [data-theme="dark"] {
@@ -61,6 +63,8 @@
             --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
             --shadow-hover: 0 8px 40px rgba(99, 102, 241, 0.25);
             --accent-light: #1e1b4b;
+            --header-bg: rgba(15, 23, 42, 0.55);
+            --header-border: rgba(51, 65, 85, 0.7);
         }
 
         html { scroll-behavior: smooth; }
@@ -125,17 +129,18 @@
             pointer-events: none;
         }
 
-        /* ===== HEADER ===== */
+        /* ============================================================
+           HEADER — статичный, слегка прозрачный
+           ============================================================ */
         header {
-            position: fixed;
-            top: 0; left: 0;
+            position: static;                 /* не фиксируется при скролле */
             width: 100%;
-            z-index: 1000;
-            background: rgba(var(--bg-secondary), 0.75);
+            background: var(--header-bg);      /* полупрозрачный фон */
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid var(--header-border);
             transition: background var(--transition), border var(--transition);
+            z-index: 100;
         }
 
         .nav {
@@ -232,9 +237,9 @@
 
         /* ===== HERO ===== */
         .hero {
-            padding-top: 140px;
+            padding-top: 40px;       /* было 140 — уменьшено, т.к. header теперь в потоке */
             padding-bottom: 80px;
-            min-height: 100vh;
+            min-height: calc(100vh - 72px);
             display: flex;
             align-items: center;
         }
@@ -655,7 +660,6 @@
             margin-bottom: 20px;
         }
 
-        /* ★★★ КРУГЛАЯ ИКОНКА — фиксированный размер, не растягивается ★★★ */
         .contact-item .icon {
             flex: 0 0 48px;
             width: 48px;
@@ -814,7 +818,7 @@
         }
         #leafLayer.hidden { opacity: 0; pointer-events: none; }
 
-        header, main, section, footer { position: relative; z-index: 2; }
+        main, section, footer { position: relative; z-index: 2; }
 
         .leaf {
             position: absolute;
@@ -851,13 +855,88 @@
             opacity: 0;
             transition: opacity 0.3s ease, transform 0.3s ease;
             pointer-events: none;
+            max-width: 90vw;
+            text-align: center;
         }
         #toast.show {
             opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
 
-        /* ===== ПАСХАЛКА ===== */
+        /* ===== ПОДСКАЗКА О ПАСХАЛКЕ ===== */
+        #easterEggHint {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 10px 16px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            z-index: 1100;
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+            max-width: calc(100vw - 40px);
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        #easterEggHint:hover {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.35);
+        }
+        #easterEggHint .ee-icon {
+            font-size: 1.1rem;
+            animation: ee-wiggle 3s ease-in-out infinite;
+        }
+        @keyframes ee-wiggle {
+            0%, 90%, 100% { transform: rotate(0); }
+            93% { transform: rotate(-15deg); }
+            96% { transform: rotate(15deg); }
+        }
+        #easterEggHint .ee-text {
+            max-width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: max-width 0.4s ease, margin-left 0.3s ease;
+        }
+        #easterEggHint:hover .ee-text,
+        #easterEggHint.show-text .ee-text {
+            max-width: 320px;
+            margin-left: 2px;
+        }
+        #easterEggHint .ee-key {
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--accent);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+            font-size: 0.85em;
+            font-weight: 700;
+            margin: 0 2px;
+        }
+        #easterEggHint:hover .ee-key {
+            background: rgba(255, 255, 255, 0.25);
+            color: #fff;
+        }
+        @media (max-width: 480px) {
+            #easterEggHint {
+                left: 12px;
+                bottom: 12px;
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* ===== ПАСХАЛКА: bug party ===== */
         .bug {
             position: fixed;
             font-size: 32px;
@@ -888,8 +967,9 @@
         }
 
         @media (max-width: 768px) {
+            /* Мобильное меню открывается поверх всего — оставляем absolute */
             .nav-links {
-                position: fixed;
+                position: absolute;
                 top: 72px; left: 0;
                 width: 100%;
                 background: var(--bg-secondary);
@@ -903,6 +983,7 @@
                 flex: none;
                 justify-content: flex-start;
                 margin: 0;
+                z-index: 200;
             }
             .nav-links.open { transform: translateY(0); }
             .hamburger { display: flex; }
@@ -1310,6 +1391,13 @@
 
     <div id="toast" role="status" aria-live="polite"></div>
 
+    <button id="easterEggHint" aria-label="Подсказка: наберите qa, чтобы увидеть пасхалку" title="Наберите qa">
+        <span class="ee-icon">🐛</span>
+        <span class="ee-text">
+            Наберите <span class="ee-key">q</span><span class="ee-key">a</span> на клавиатуре — увидите пасхалку
+        </span>
+    </button>
+
     <script>
         // ===== THEME =====
         const themeToggle = document.getElementById('themeToggle');
@@ -1362,7 +1450,7 @@
                 e.preventDefault();
                 const target = document.querySelector(href);
                 if (target) {
-                    const offset = 80;
+                    const offset = 20;   /* хедер больше не фиксирован — отступ не нужен */
                     const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
                     window.scrollTo({ top, behavior: 'smooth' });
                 }
@@ -1531,7 +1619,7 @@
             toast.textContent = msg;
             toast.classList.add('show');
             clearTimeout(toastTimer);
-            toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
+            toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
         }
 
         async function copyToClipboard(text) {
@@ -1572,8 +1660,7 @@
             });
         });
 
-        // ===== VCARD =====
-        document.getElementById('downloadVCard').addEventListener('click', () => {
+        // ===== VCARD =====        document.getElementById('downloadVCard').addEventListener('click', () => {
             const vcard = [
                 'BEGIN:VCARD',
                 'VERSION:3.0',
@@ -1600,15 +1687,33 @@
             showToast('vCard скачана');
         });
 
-        // ===== ПАСХАЛКА =====
-        let keyBuffer = '';
+        // ============================================================
+        // ПАСХАЛКА "qa"
+        // ============================================================
+        const easterEggHint = document.getElementById('easterEggHint');
+        const QA_TRIGGER = ['q', 'a'];
+
+        let keyBuffer = [];
         window.addEventListener('keydown', (e) => {
             if (e.target.matches('input, textarea')) return;
-            keyBuffer = (keyBuffer + e.key.toLowerCase()).slice(-3);
-            if (keyBuffer === 'qa') {
+            const k = e.key.toLowerCase();
+            keyBuffer.push(k);
+            if (keyBuffer.length > 2) keyBuffer.shift();
+            if (keyBuffer.length === 2 && keyBuffer[0] === QA_TRIGGER[0] && keyBuffer[1] === QA_TRIGGER[1]) {
                 runBugParty();
-                keyBuffer = '';
+                keyBuffer = [];
             }
+        });
+
+        easterEggHint.addEventListener('click', () => {
+            runBugParty();
+        });
+
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                easterEggHint.classList.add('show-text');
+                setTimeout(() => easterEggHint.classList.remove('show-text'), 4000);
+            }, 1500);
         });
 
         function runBugParty() {
@@ -1627,7 +1732,7 @@
                 document.body.appendChild(b);
                 setTimeout(() => b.remove(), 3200);
             }
-            showToast('🐛 QA-пасхалка! Баги разбежались');
+            showToast('🐛 Пасхалка найдена! Вы набрали «qa» — баги разбежались');
         }
     </script>
 
