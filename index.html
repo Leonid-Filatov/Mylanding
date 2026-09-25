@@ -186,7 +186,7 @@
         }
 
         .theme-toggle,
-        .leaves-toggle {
+        .season-toggle {
             background: var(--bg-card);
             border: 1px solid var(--border);
             color: var(--text-secondary);
@@ -207,18 +207,19 @@
             border-color: var(--accent);
         }
 
-        .leaves-toggle {
+        /* ===== СЕЗОННАЯ КНОПКА ===== */
+        .season-toggle {
             color: #d97706;
         }
-        .leaves-toggle:hover {
-            background: #f59e0b;
+        .season-toggle:hover {
+            background: var(--season-color, #f59e0b);
             color: #fff;
-            border-color: #f59e0b;
+            border-color: var(--season-color, #f59e0b);
         }
-        .leaves-toggle.off {
+        .season-toggle.off {
             opacity: 0.5;
         }
-        .leaves-toggle.off i {
+        .season-toggle.off i {
             filter: grayscale(1);
         }
 
@@ -262,14 +263,15 @@
             gap: 8px;
             background: var(--accent-light);
             color: var(--accent);
-            font-size: 0.8rem;
+            font-size: 0.95rem;
             font-weight: 600;
-            padding: 6px 16px;
+            padding: 8px 20px;
             border-radius: 100px;
             margin-bottom: 20px;
+            letter-spacing: 0.01em;
         }
         .hero-content .badge i {
-            font-size: 0.7rem;
+            font-size: 0.85rem;
         }
 
         .hero-content h1 {
@@ -402,6 +404,7 @@
         .hero-stats .stat h3 {
             font-size: 1.8rem;
             font-weight: 700;
+            font-variant-numeric: tabular-nums;
         }
         .hero-stats .stat p {
             font-size: 0.85rem;
@@ -512,7 +515,6 @@
             isolation: isolate;
         }
 
-        /* Слой с фоновой фотографией */
         .timeline-item::before {
             content: '';
             position: absolute;
@@ -526,7 +528,6 @@
             z-index: -2;
         }
 
-        /* Вуаль поверх фото для читаемости текста (светлая тема) — светлее */
         .timeline-item::after {
             content: '';
             position: absolute;
@@ -541,7 +542,6 @@
             transition: background 0.4s ease;
         }
 
-        /* Тёмная тема — тёмная вуаль */
         [data-theme="dark"] .timeline-item::after {
             background: linear-gradient(
                 120deg,
@@ -567,7 +567,6 @@
             opacity: 0.65;
         }
 
-        /* Фоновые фото для конкретных карточек */
         .timeline-item.item-delta::before {
             background-image: url('images/photo_delta.png');
         }
@@ -578,7 +577,6 @@
             background-image: url('images/photo_stt.jpg');
         }
 
-        /* ===== Дата в потоке (исправлен баг с наездом) ===== */
         .timeline-item .year {
             display: inline-block;
             font-weight: 700;
@@ -828,26 +826,38 @@
         }
 
         /* ===== COUNTER ===== */
-        #counter {
+        #counter,
+        [data-counter] {
             font-variant-numeric: tabular-nums;
             display: inline-block;
+        }
+        #counter {
             min-width: 3.2ch;
         }
 
         /* ============================================================
-           ОСЕННИЕ ЛИСТОЧКИ
+           СЕЗОННЫЕ ЛИСТОЧКИ
            ============================================================ */
         #leafLayer {
             position: fixed;
             inset: 0;
             pointer-events: none;
             overflow: hidden;
-            z-index: 900;
+            z-index: 1; /* под контентом, чтобы не перекрывать текст */
             transition: opacity 0.6s ease;
         }
         #leafLayer.hidden {
             opacity: 0;
             pointer-events: none;
+        }
+
+        /* Контентные секции — выше листьев */
+        header,
+        main,
+        section,
+        footer {
+            position: relative;
+            z-index: 2;
         }
 
         .leaf {
@@ -922,7 +932,6 @@
             .hero-content h1 { font-size: 2.6rem; }
             .section-title { font-size: 2rem; }
 
-            /* На мобиле компактнее */
             .timeline-item {
                 padding: 22px;
             }
@@ -933,7 +942,6 @@
             .projects-grid { grid-template-columns: 1fr; }
             .hero-stats { flex-wrap: wrap; gap: 20px; }
 
-            /* На мобиле фон слабее, чтобы текст читался */
             .timeline-item::before { opacity: 0.3; }
             [data-theme="dark"] .timeline-item::before { opacity: 0.35; }
         }
@@ -971,8 +979,8 @@
             </ul>
 
             <div class="nav-actions">
-                <button class="leaves-toggle" id="leavesToggle" aria-label="Включить/выключить осенние листья" title="Осенние листья">
-                    <i class="fas fa-leaf"></i>
+                <button class="season-toggle" id="seasonToggle" aria-label="Включить/выключить сезонные листья" title="Сезонные листья">
+                    <i class="fas fa-leaf" id="seasonIcon"></i>
                 </button>
                 <button class="theme-toggle" id="themeToggle" aria-label="Сменить тему">
                     <i class="fas fa-circle-half-stroke"></i>
@@ -989,7 +997,7 @@
         <div class="container hero-grid">
             <div class="hero-content">
                 <div class="badge">
-                    <i class="fas fa-bug"></i> 2.5 года коммерческого опыта в QA
+                    <i class="fas fa-bug"></i> 2.5 года опыта в QA
                 </div>
                 <h1>
                     Привет, я <br />
@@ -1010,15 +1018,15 @@
                 </div>
                 <div class="hero-stats">
                     <div class="stat">
-                        <h3>2.5+</h3>
+                        <h3 data-counter data-target="2.5" data-suffix="+" data-decimals="1">0</h3>
                         <p>Лет в QA</p>
                     </div>
                     <div class="stat">
-                        <h3>6+</h3>
+                        <h3 data-counter data-target="6" data-suffix="+">0</h3>
                         <p>Крупных проектов</p>
                     </div>
                     <div class="stat">
-                        <h3 id="counter" data-target="1500">100</h3>
+                        <h3 id="counter" data-counter data-target="1500" data-suffix="+">0</h3>
                         <p>Тест-кейсов</p>
                     </div>
                 </div>
@@ -1148,7 +1156,7 @@
 
             <div class="timeline">
 
-                <!-- Дельта — фон photo_delta.png -->
+                <!-- Дельта -->
                 <div class="timeline-item item-delta">
                     <span class="year">Апр 2026 — Июл 2026</span>
                     <h3>Инженер по тестированию и поддержке пользователей L2</h3>
@@ -1164,7 +1172,7 @@
                     </div>
                 </div>
 
-                <!-- РусГидро — фон phoro_ad_rus.png -->
+                <!-- РусГидро -->
                 <div class="timeline-item item-rusgidro">
                     <span class="year">Мар 2025 — Дек 2025</span>
                     <h3>QA инженер (Web/API)</h3>
@@ -1182,7 +1190,7 @@
                     </div>
                 </div>
 
-                <!-- STRONG TEAM — фон photo_stt.jpg -->
+                <!-- STRONG TEAM -->
                 <div class="timeline-item item-strong">
                     <span class="year">Авг 2023 — Фев 2025</span>
                     <h3>QA Manual</h3>
@@ -1225,6 +1233,7 @@
                     <p>Тестирование модулей бюджета, поручений, шаблонов проектов. API-тестирование 470+ эндпоинтов, написание 600+ тест-кейсов. Раннее тестирование в sandbox-средах.</p>
                     <div class="tags">
                         <span>Postman</span><span>Swagger</span><span>Test IT</span><span>VirtualBox</span><span>Python</span>
+                        <span>Php</span><span>C++</span><span>Shift-left Testing</span><span>CI/CD</span><span>Git</span><span>SQL</span>
                     </div>
                 </div>
 
@@ -1398,10 +1407,12 @@
             this.reset();
         });
 
-        // ===== COUNTER ANIMATION =====
-        const counter = document.getElementById('counter');
-        if (counter) {
-            const target = +counter.dataset.target;
+        // ===== UNIVERSAL COUNTER ANIMATION =====
+        const counters = document.querySelectorAll('[data-counter]');
+        counters.forEach(counter => {
+            const target = parseFloat(counter.dataset.target);
+            const suffix = counter.dataset.suffix || '';
+            const decimals = parseInt(counter.dataset.decimals || '0', 10);
             const duration = 1500;
             let started = false;
 
@@ -1415,7 +1426,8 @@
                             const elapsed = now - startTime;
                             const progress = Math.min(elapsed / duration, 1);
                             const eased = 1 - Math.pow(1 - progress, 3);
-                            counter.textContent = Math.floor(100 + (target - 100) * eased) + '+';
+                            const value = target * eased;
+                            counter.textContent = value.toFixed(decimals) + suffix;
                             if (progress < 1) requestAnimationFrame(tick);
                         };
 
@@ -1426,7 +1438,7 @@
             }, { threshold: 0.5 });
 
             counterObserver.observe(counter);
-        }
+        });
 
         // ===== CHIP GLOW ANIMATION =====
         const chips = document.querySelectorAll('.chip');
@@ -1459,23 +1471,79 @@
         }
 
         // ============================================================
-        // ОСЕННИЕ ЛИСТОЧКИ
+        // СЕЗОННЫЕ ЛИСТОЧКИ
         // ============================================================
         const leafLayer = document.getElementById('leafLayer');
-        const leavesToggle = document.getElementById('leavesToggle');
+        const seasonToggle = document.getElementById('seasonToggle');
+        const seasonIcon = document.getElementById('seasonIcon');
 
-        const LEAF_EMOJIS = ['🍁', '🍂', '🍃', '🌿'];
+        // Определяем сезон по месяцу
+        function getSeason() {
+            const month = new Date().getMonth(); // 0 = январь
+            if (month >= 2 && month <= 4) return 'spring';   // март–май
+            if (month >= 5 && month <= 7) return 'summer';   // июнь–август
+            if (month >= 8 && month <= 10) return 'autumn';  // сентябрь–ноябрь
+            return 'winter';                                  // декабрь–февраль
+        }
+
+        // Настройки для каждого сезона
+        const SEASONS = {
+            spring: {
+                emojis: ['🌸', '🌷', '🌺', '🌼', '🍃'],
+                color: '#ec4899',
+                icon: 'fa-seedling',
+                count: 16,
+                label: 'Весенние лепестки'
+            },
+            summer: {
+                emojis: ['🌿', '🍃', '🌱', '☘️'],
+                color: '#22c55e',
+                icon: 'fa-sun',
+                count: 14,
+                label: 'Летняя зелень'
+            },
+            autumn: {
+                emojis: ['🍁', '🍂', '🍃', '🌿'],
+                color: '#d97706',
+                icon: 'fa-leaf',
+                count: 18,
+                label: 'Осенние листья'
+            },
+            winter: {
+                emojis: ['❄️', '❄', '🌨️', '✻'],
+                color: '#0ea5e9',
+                icon: 'fa-snowflake',
+                count: 22,
+                label: 'Зимний снег'
+            }
+        };
+
+        const currentSeason = getSeason();
+        const seasonConfig = SEASONS[currentSeason];
+
+        // Применяем иконку и цвет кнопки
+        seasonIcon.className = 'fas ' + seasonConfig.icon;
+        seasonToggle.style.setProperty('--season-color', seasonConfig.color);
+        seasonToggle.title = seasonConfig.label;
 
         function createLeaf() {
             const leaf = document.createElement('span');
             leaf.className = 'leaf';
-            leaf.textContent = LEAF_EMOJIS[Math.floor(Math.random() * LEAF_EMOJIS.length)];
+            leaf.textContent = seasonConfig.emojis[Math.floor(Math.random() * seasonConfig.emojis.length)];
             leaf.style.left = Math.random() * 100 + 'vw';
-            leaf.style.fontSize = (16 + Math.random() * 18) + 'px';
-            leaf.style.animationDuration = (8 + Math.random() * 8) + 's';
+
+            if (currentSeason === 'winter') {
+                leaf.style.fontSize = (10 + Math.random() * 12) + 'px';
+                leaf.style.animationDuration = (10 + Math.random() * 10) + 's';
+            } else {
+                leaf.style.fontSize = (16 + Math.random() * 18) + 'px';
+                leaf.style.animationDuration = (8 + Math.random() * 8) + 's';
+            }
+
             leaf.style.animationDelay = (-Math.random() * 10) + 's';
             leaf.style.opacity = 0.6 + Math.random() * 0.4;
-            if (Math.random() > 0.5) {
+
+            if (currentSeason !== 'winter' && Math.random() > 0.5) {
                 leaf.style.filter = `hue-rotate(${Math.random() * 40 - 20}deg) drop-shadow(0 2px 3px rgba(0,0,0,0.08))`;
             }
             leafLayer.appendChild(leaf);
@@ -1491,15 +1559,15 @@
         function applyLeavesState() {
             if (leavesEnabled) {
                 leafLayer.classList.remove('hidden');
-                leavesToggle.classList.remove('off');
-                if (!leafLayer.children.length) buildLeaves(18);
+                seasonToggle.classList.remove('off');
+                if (!leafLayer.children.length) buildLeaves(seasonConfig.count);
             } else {
                 leafLayer.classList.add('hidden');
-                leavesToggle.classList.add('off');
+                seasonToggle.classList.add('off');
             }
         }
 
-        leavesToggle.addEventListener('click', () => {
+        seasonToggle.addEventListener('click', () => {
             leavesEnabled = !leavesEnabled;
             localStorage.setItem('leaves', leavesEnabled ? 'on' : 'off');
             applyLeavesState();
