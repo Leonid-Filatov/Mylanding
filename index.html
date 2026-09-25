@@ -352,7 +352,6 @@
             animation: avatar-glow 4s ease-in-out infinite;
         }
 
-        /* ===== ПЛАВНОЕ СВЕЧЕНИЕ ФОТО ===== */
         @keyframes avatar-glow {
             0%, 100% {
                 box-shadow:
@@ -379,14 +378,8 @@
         }
 
         @keyframes pulse-ring {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 0.2;
-            }
-            50% {
-                transform: scale(1.05);
-                opacity: 0.1;
-            }
+            0%, 100% { transform: scale(1); opacity: 0.2; }
+            50% { transform: scale(1.05); opacity: 0.1; }
         }
 
         .hero-avatar img {
@@ -498,7 +491,9 @@
             color: var(--text-muted);
         }
 
-        /* ===== EXPERIENCE ===== */
+        /* ============================================================
+           EXPERIENCE / TIMELINE (с фоновыми фото)
+           ============================================================ */
         .timeline {
             margin-top: 40px;
             display: flex;
@@ -507,40 +502,106 @@
         }
 
         .timeline-item {
-            background: var(--bg-card);
+            position: relative;
             border: 1px solid var(--border);
             border-radius: var(--radius);
             padding: 28px 32px;
+            overflow: hidden;
             transition: all var(--transition);
-            position: relative;
-            padding-left: 80px;
+            background: var(--bg-card);
+            isolation: isolate;
+        }
+
+        /* Слой с фоновой фотографией */
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.22;
+            transform: scale(1.05);
+            transition: opacity 0.4s ease, transform 0.6s ease;
+            z-index: -2;
+        }
+
+        /* Вуаль поверх фото для читаемости текста (светлая тема) */
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                120deg,
+                rgba(255, 255, 255, 0.92) 0%,
+                rgba(255, 255, 255, 0.78) 45%,
+                rgba(255, 255, 255, 0.58) 100%
+            );
+            z-index: -1;
+            transition: background 0.4s ease;
+        }
+
+        /* Тёмная тема — тёмная вуаль */
+        [data-theme="dark"] .timeline-item::after {
+            background: linear-gradient(
+                120deg,
+                rgba(15, 23, 42, 0.94) 0%,
+                rgba(15, 23, 42, 0.82) 45%,
+                rgba(15, 23, 42, 0.65) 100%
+            );
+        }
+
+        [data-theme="dark"] .timeline-item::before {
+            opacity: 0.32;
         }
 
         .timeline-item:hover {
             box-shadow: var(--shadow-hover);
             border-color: var(--accent);
         }
+        .timeline-item:hover::before {
+            opacity: 0.32;
+            transform: scale(1.12);
+        }
+        [data-theme="dark"] .timeline-item:hover::before {
+            opacity: 0.45;
+        }
 
+        /* Фоновые фото для конкретных карточек — ВАШИ имена файлов */
+        .timeline-item.item-delta::before {
+            background-image: url('images/photo_delta.png');
+        }
+        .timeline-item.item-rusgidro::before {
+            background-image: url('images/phoro_ad_rus.png');
+        }
+        .timeline-item.item-strong::before {
+            background-image: url('images/photo_st.jpg');
+        }
+
+        /* ===== ИСПРАВЛЕНИЕ БАГА С НАЕЗЖАЮЩИМ ТЕКСТОМ =====
+           Дата теперь в потоке, а не position: absolute. */
         .timeline-item .year {
-            position: absolute;
-            left: 24px;
-            top: 28px;
+            display: inline-block;
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--accent);
             background: var(--accent-light);
             padding: 4px 12px;
             border-radius: 100px;
+            margin-bottom: 10px;
+            white-space: nowrap;
         }
 
         .timeline-item h3 {
             font-size: 1.2rem;
             font-weight: 600;
+            line-height: 1.35;
         }
         .timeline-item .company {
             color: var(--accent);
             font-weight: 500;
             font-size: 0.95rem;
+            margin-top: 2px;
         }
         .timeline-item .role {
             font-weight: 500;
@@ -806,12 +867,8 @@
                 transform: translate3d(0, -10vh, 0) rotate(0deg);
                 opacity: 0;
             }
-            8% {
-                opacity: 1;
-            }
-            50% {
-                transform: translate3d(30px, 50vh, 0) rotate(180deg);
-            }
+            8% { opacity: 1; }
+            50% { transform: translate3d(30px, 50vh, 0) rotate(180deg); }
             100% {
                 transform: translate3d(-20px, 110vh, 0) rotate(360deg);
                 opacity: 0.9;
@@ -850,34 +907,20 @@
             transition: opacity 0.4s ease, transform 0.4s ease;
         }
 
-        /* Медведь 1 — ходит слева-направо */
-        .bear:nth-child(1) {
-            animation-duration: 16s;
-            animation-delay: 0s;
-        }
-        /* Медведь 2 — ходит справа-налево (переворачиваем) */
+        .bear:nth-child(1) { animation-duration: 16s; animation-delay: 0s; }
         .bear:nth-child(2) {
             animation-duration: 20s;
             animation-delay: -4s;
             animation-direction: reverse;
             transform: scaleX(-1);
         }
-        /* Медведь 3 — ходит помедленнее */
-        .bear:nth-child(3) {
-            animation-duration: 26s;
-            animation-delay: -9s;
-        }
+        .bear:nth-child(3) { animation-duration: 26s; animation-delay: -9s; }
 
         @keyframes bear-walk {
-            0% {
-                left: -60px;
-            }
-            100% {
-                left: calc(100% + 20px);
-            }
+            0% { left: -60px; }
+            100% { left: calc(100% + 20px); }
         }
 
-        /* Покачивание «туда-сюда», чтобы казалось, что гуляет */
         .bear::after {
             content: '';
             display: block;
@@ -888,7 +931,6 @@
             to   { transform: translateY(-4px); }
         }
 
-        /* Ягодка, которая появляется рядом с медведем */
         .berry {
             position: absolute;
             bottom: 10px;
@@ -897,16 +939,13 @@
             pointer-events: none;
             transition: opacity 0.3s ease;
         }
-        .berry.pop {
-            animation: berry-pop 1s ease forwards;
-        }
+        .berry.pop { animation: berry-pop 1s ease forwards; }
         @keyframes berry-pop {
             0%   { opacity: 0; transform: translateY(0) scale(0.6); }
             40%  { opacity: 1; transform: translateY(-10px) scale(1.1); }
             100% { opacity: 0; transform: translateY(-22px) scale(0.8); }
         }
 
-        /* Машет лапой и исчезает при наведении */
         .bear:hover {
             animation-play-state: paused;
             transform: scaleX(1) scale(1.25) rotate(-8deg);
@@ -939,12 +978,8 @@
                 margin-left: auto;
                 margin-right: auto;
             }
-            .hero-buttons {
-                justify-content: center;
-            }
-            .hero-stats {
-                justify-content: center;
-            }
+            .hero-buttons { justify-content: center; }
+            .hero-stats { justify-content: center; }
             .hero-avatar {
                 width: 280px;
                 height: 280px;
@@ -954,12 +989,8 @@
                 grid-template-columns: 1fr;
                 text-align: center;
             }
-            .about-info {
-                justify-items: center;
-            }
-            .contact-wrap {
-                grid-template-columns: 1fr;
-            }
+            .about-info { justify-items: center; }
+            .contact-wrap { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 768px) {
@@ -980,62 +1011,40 @@
                 justify-content: flex-start;
                 margin: 0;
             }
-            .nav-links.open {
-                transform: translateY(0);
-            }
-            .hamburger {
-                display: flex;
-            }
-            .hero-content h1 {
-                font-size: 2.6rem;
-            }
-            .section-title {
-                font-size: 2rem;
-            }
+            .nav-links.open { transform: translateY(0); }
+            .hamburger { display: flex; }
+            .hero-content h1 { font-size: 2.6rem; }
+            .section-title { font-size: 2rem; }
+
+            /* На мобиле компактнее */
             .timeline-item {
-                padding-left: 24px;
-                padding-top: 60px;
+                padding: 22px;
             }
             .timeline-item .year {
-                top: 16px;
-                left: 24px;
+                font-size: 0.75rem;
             }
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-            .hero-stats {
-                flex-wrap: wrap;
-                gap: 20px;
-            }
-            .bear {
-                font-size: 36px;
-            }
-            .bear-zone {
-                height: 100px;
-            }
+
+            .projects-grid { grid-template-columns: 1fr; }
+            .hero-stats { flex-wrap: wrap; gap: 20px; }
+            .bear { font-size: 36px; }
+            .bear-zone { height: 100px; }
+
+            /* На мобиле фон слабее, чтобы текст читался */
+            .timeline-item::before { opacity: 0.15; }
+            [data-theme="dark"] .timeline-item::before { opacity: 0.22; }
         }
 
         @media (max-width: 480px) {
-            .hero-content h1 {
-                font-size: 2rem;
-            }
+            .hero-content h1 { font-size: 2rem; }
             .hero-avatar {
                 width: 200px;
                 height: 200px;
                 font-size: 3.6rem;
             }
-            .container {
-                padding: 0 16px;
-            }
-            section {
-                padding: 60px 0;
-            }
-            .leaf {
-                font-size: 16px;
-            }
-            .bear {
-                font-size: 30px;
-            }
+            .container { padding: 0 16px; }
+            section { padding: 60px 0; }
+            .leaf { font-size: 16px; }
+            .bear { font-size: 30px; }
         }
     </style>
 </head>
@@ -1236,8 +1245,8 @@
 
             <div class="timeline">
 
-                <!-- Дельта -->
-                <div class="timeline-item">
+                <!-- Дельта — фон photo_delta.png -->
+                <div class="timeline-item item-delta">
                     <span class="year">Апр 2026 — Июл 2026</span>
                     <h3>Инженер по тестированию и поддержке пользователей L2</h3>
                     <div class="company">ООО «Дельта» (Москва)</div>
@@ -1252,8 +1261,8 @@
                     </div>
                 </div>
 
-                <!-- РусГидро -->
-                <div class="timeline-item">
+                <!-- РусГидро — фон phoro_ad_rus.png -->
+                <div class="timeline-item item-rusgidro">
                     <span class="year">Мар 2025 — Дек 2025</span>
                     <h3>QA инженер (Web/API)</h3>
                     <div class="company">РусГидро (проект «Адепт»)</div>
@@ -1270,8 +1279,8 @@
                     </div>
                 </div>
 
-                <!-- STRONG TEAM -->
-                <div class="timeline-item">
+                <!-- STRONG TEAM — фон photo_st.jpg -->
+                <div class="timeline-item item-strong">
                     <span class="year">Авг 2023 — Фев 2025</span>
                     <h3>QA Manual</h3>
                     <div class="company">STRONG TEAM (Ярославль)</div>
@@ -1560,7 +1569,6 @@
         const leavesToggle = document.getElementById('leavesToggle');
 
         const LEAF_EMOJIS = ['🍁', '🍂', '🍃', '🌿'];
-        const LEAF_COLORS = ['#d97706', '#b45309', '#dc2626', '#ea580c', '#ca8a04'];
 
         function createLeaf() {
             const leaf = document.createElement('span');
@@ -1571,7 +1579,6 @@
             leaf.style.animationDuration = (8 + Math.random() * 8) + 's';
             leaf.style.animationDelay = (-Math.random() * 10) + 's';
             leaf.style.opacity = 0.6 + Math.random() * 0.4;
-            // Цветной filter для разнообразия
             if (Math.random() > 0.5) {
                 leaf.style.filter = `hue-rotate(${Math.random() * 40 - 20}deg) drop-shadow(0 2px 3px rgba(0,0,0,0.08))`;
             }
@@ -1609,7 +1616,6 @@
         // ============================================================
         const bears = document.querySelectorAll('.bear');
         bears.forEach((bear, index) => {
-            // Каждые N секунд рядом с медведем «вырастает» ягодка
             setInterval(() => {
                 const berry = document.createElement('span');
                 berry.className = 'berry';
