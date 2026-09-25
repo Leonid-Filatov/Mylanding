@@ -3,23 +3,39 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Портфолио QA-инженера | Леонид</title>
+
+    <title>Леонид — QA-инженер | Портфолио</title>
+    <meta name="description" content="QA-инженер (Web/API) с 2.5 года опыта. Функциональное, регрессионное и интеграционное тестирование микросервисов. FinTech, энергетика, корпоративный сектор." />
+    <meta name="author" content="Леонид Филатов" />
+
+    <!-- ===== Open Graph / Twitter Card ===== -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Леонид — QA-инженер" />
+    <meta property="og:description" content="2.5 года опыта в QA. Web/API, микросервисы, FinTech. Ищу команду для роста в автоматизацию." />
+    <meta property="og:url" content="https://leonid-filatov.github.io/Mylanding/" />
+    <meta property="og:image" content="https://leonid-filatov.github.io/Mylanding/images/preview.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Леонид — QA-инженер" />
+    <meta name="twitter:description" content="2.5 года опыта в QA. Web/API, микросервисы, FinTech." />
+    <meta name="twitter:image" content="https://leonid-filatov.github.io/Mylanding/images/preview.png" />
+
+    <!-- ===== Favicon (SVG inline) ===== -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%90%9E%3C/text%3E%3C/svg%3E" />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
 
-    <!-- Font Awesome 6 (Free) -->
+    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
     <style>
         /* ===== RESET & BASE ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --bg-primary: #f8fafc;
@@ -52,9 +68,7 @@
             --accent-light: #1e1b4b;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: var(--font);
@@ -65,14 +79,9 @@
             overflow-x: hidden;
         }
 
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        ul {
-            list-style: none;
-        }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; height: auto; }
 
         .container {
             max-width: 1200px;
@@ -80,9 +89,7 @@
             padding: 0 24px;
         }
 
-        section {
-            padding: 80px 0;
-        }
+        section { padding: 80px 0; }
 
         .section-label {
             display: inline-block;
@@ -103,10 +110,7 @@
             line-height: 1.2;
             margin-bottom: 16px;
         }
-
-        .section-title span {
-            color: var(--accent);
-        }
+        .section-title span { color: var(--accent); }
 
         .section-desc {
             color: var(--text-secondary);
@@ -114,11 +118,23 @@
             font-size: 1.1rem;
         }
 
-        /* ===== HEADER ===== */
-        header {
+        /* ===== READING PROGRESS BAR ===== */
+        #progressBar {
             position: fixed;
             top: 0;
             left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), #a78bfa);
+            z-index: 1100;
+            transition: width 0.1s linear;
+            pointer-events: none;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: fixed;
+            top: 0; left: 0;
             width: 100%;
             z-index: 1000;
             background: rgba(var(--bg-secondary), 0.75);
@@ -141,9 +157,7 @@
             color: var(--text-primary);
             white-space: nowrap;
         }
-        .logo span {
-            color: var(--accent);
-        }
+        .logo span { color: var(--accent); }
 
         .nav-links {
             flex: 1;
@@ -152,7 +166,6 @@
             align-items: center;
             margin: 0 20px;
         }
-
         .nav-links a {
             font-size: 0.9rem;
             font-weight: 500;
@@ -160,24 +173,16 @@
             transition: color var(--transition);
             position: relative;
         }
-
         .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
+            bottom: -4px; left: 0;
+            width: 0; height: 2px;
             background: var(--accent);
             transition: width var(--transition);
         }
-
-        .nav-links a:hover {
-            color: var(--text-primary);
-        }
-        .nav-links a:hover::after {
-            width: 100%;
-        }
+        .nav-links a:hover { color: var(--text-primary); }
+        .nav-links a:hover::after { width: 100%; }
 
         .nav-actions {
             display: flex;
@@ -190,8 +195,7 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             color: var(--text-secondary);
-            width: 40px;
-            height: 40px;
+            width: 40px; height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -200,28 +204,19 @@
             font-size: 1.2rem;
             transition: all var(--transition);
         }
-
         .theme-toggle:hover {
             background: var(--accent);
             color: #fff;
             border-color: var(--accent);
         }
-
-        /* ===== СЕЗОННАЯ КНОПКА ===== */
-        .season-toggle {
-            color: #d97706;
-        }
+        .season-toggle { color: #d97706; }
         .season-toggle:hover {
             background: var(--season-color, #f59e0b);
             color: #fff;
             border-color: var(--season-color, #f59e0b);
         }
-        .season-toggle.off {
-            opacity: 0.5;
-        }
-        .season-toggle.off i {
-            filter: grayscale(1);
-        }
+        .season-toggle.off { opacity: 0.5; }
+        .season-toggle.off i { filter: grayscale(1); }
 
         .hamburger {
             display: none;
@@ -268,11 +263,8 @@
             padding: 8px 20px;
             border-radius: 100px;
             margin-bottom: 20px;
-            letter-spacing: 0.01em;
         }
-        .hero-content .badge i {
-            font-size: 0.85rem;
-        }
+        .hero-content .badge i { font-size: 0.85rem; }
 
         .hero-content h1 {
             font-size: 3.6rem;
@@ -301,6 +293,7 @@
             gap: 14px;
         }
 
+        /* ===== BUTTONS ===== */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -309,12 +302,12 @@
             border-radius: 100px;
             font-weight: 600;
             font-size: 0.95rem;
-            border: none;
+            border: 1px solid var(--border);
             cursor: pointer;
-            transition: all var(--transition);
+            transition: background var(--transition), border-color var(--transition), box-shadow var(--transition), transform 0.15s ease-out;
             background: var(--bg-card);
             color: var(--text-primary);
-            border: 1px solid var(--border);
+            will-change: transform;
         }
 
         .btn-primary {
@@ -325,15 +318,10 @@
         .btn-primary:hover {
             background: var(--accent-hover);
             border-color: var(--accent-hover);
-            transform: translateY(-2px);
             box-shadow: 0 8px 30px rgba(99, 102, 241, 0.3);
         }
 
-        .btn-outline:hover {
-            background: var(--bg-card);
-            border-color: var(--text-primary);
-            transform: translateY(-2px);
-        }
+        .btn-outline:hover { border-color: var(--text-primary); }
 
         .hero-image {
             display: flex;
@@ -385,8 +373,7 @@
         }
 
         .hero-avatar img {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             object-fit: cover;
             border-radius: 50%;
             position: relative;
@@ -429,7 +416,6 @@
             margin: 20px 0;
             text-align: center;
         }
-
         .about-text .photo-block img {
             max-width: 80%;
             border-radius: var(--radius);
@@ -443,7 +429,6 @@
             gap: 12px 24px;
             margin-top: 24px;
         }
-
         .about-info li {
             display: flex;
             align-items: center;
@@ -472,13 +457,11 @@
             text-align: center;
             transition: all var(--transition);
         }
-
         .skill-card:hover {
             transform: translateY(-6px);
             box-shadow: var(--shadow-hover);
             border-color: var(--accent);
         }
-
         .skill-card .icon {
             font-size: 2.4rem;
             color: var(--accent);
@@ -494,9 +477,29 @@
             color: var(--text-muted);
         }
 
-        /* ============================================================
-           EXPERIENCE / TIMELINE (с фоновыми фото)
-           ============================================================ */
+        /* ===== SKILL TREE ===== */
+        .skill-tree {
+            margin-top: 40px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .skill-tree svg {
+            max-width: 900px;
+            width: 100%;
+            height: auto;
+        }
+        .st-node-center { fill: var(--accent); }
+        .st-node-center-text { fill: #fff; font-weight: 700; font-size: 20px; text-anchor: middle; dominant-baseline: middle; font-family: var(--font); }
+        .st-branch { stroke: var(--accent); stroke-width: 2; fill: none; opacity: 0.35; }
+        .st-node-bg { fill: var(--bg-secondary); stroke: var(--accent); stroke-width: 2; }
+        .st-node-text { fill: var(--text-primary); font-weight: 600; font-size: 14px; text-anchor: middle; dominant-baseline: middle; font-family: var(--font); }
+        .st-leaf-text { fill: var(--text-secondary); font-size: 12px; text-anchor: middle; dominant-baseline: middle; font-family: var(--font); }
+
+        /* ===== EXPERIENCE ===== */
         .timeline {
             margin-top: 40px;
             display: flex;
@@ -532,28 +535,21 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(
-                120deg,
+            background: linear-gradient(120deg,
                 rgba(255, 255, 255, 0.85) 0%,
                 rgba(255, 255, 255, 0.68) 45%,
-                rgba(255, 255, 255, 0.5) 100%
-            );
+                rgba(255, 255, 255, 0.5) 100%);
             z-index: -1;
             transition: background 0.4s ease;
         }
 
         [data-theme="dark"] .timeline-item::after {
-            background: linear-gradient(
-                120deg,
+            background: linear-gradient(120deg,
                 rgba(15, 23, 42, 0.9) 0%,
                 rgba(15, 23, 42, 0.75) 45%,
-                rgba(15, 23, 42, 0.55) 100%
-            );
+                rgba(15, 23, 42, 0.55) 100%);
         }
-
-        [data-theme="dark"] .timeline-item::before {
-            opacity: 0.5;
-        }
+        [data-theme="dark"] .timeline-item::before { opacity: 0.5; }
 
         .timeline-item:hover {
             box-shadow: var(--shadow-hover);
@@ -563,19 +559,11 @@
             opacity: 0.6;
             transform: scale(1.12);
         }
-        [data-theme="dark"] .timeline-item:hover::before {
-            opacity: 0.65;
-        }
+        [data-theme="dark"] .timeline-item:hover::before { opacity: 0.65; }
 
-        .timeline-item.item-delta::before {
-            background-image: url('images/photo_delta.png');
-        }
-        .timeline-item.item-rusgidro::before {
-            background-image: url('images/phoro_ad_rus.png');
-        }
-        .timeline-item.item-strong::before {
-            background-image: url('images/photo_stt.jpg');
-        }
+        .timeline-item.item-delta::before { background-image: url('images/photo_delta.png'); }
+        .timeline-item.item-rusgidro::before { background-image: url('images/phoro_ad_rus.png'); }
+        .timeline-item.item-strong::before { background-image: url('images/photo_stt.jpg'); }
 
         .timeline-item .year {
             display: inline-block;
@@ -600,11 +588,6 @@
             font-size: 0.95rem;
             margin-top: 2px;
         }
-        .timeline-item .role {
-            font-weight: 500;
-            color: var(--text-secondary);
-            margin-bottom: 4px;
-        }
         .timeline-item ul {
             margin-top: 10px;
             list-style: disc;
@@ -612,9 +595,7 @@
             color: var(--text-secondary);
             font-size: 0.95rem;
         }
-        .timeline-item ul li {
-            margin-bottom: 4px;
-        }
+        .timeline-item ul li { margin-bottom: 4px; }
         .timeline-item .result {
             margin-top: 10px;
             background: var(--accent-light);
@@ -623,9 +604,7 @@
             color: var(--text-primary);
             font-size: 0.9rem;
         }
-        .timeline-item .result strong {
-            color: var(--accent);
-        }
+        .timeline-item .result strong { color: var(--accent); }
 
         /* ===== PROJECTS ===== */
         .projects-grid {
@@ -642,13 +621,11 @@
             padding: 28px;
             transition: all var(--transition);
         }
-
         .project-card:hover {
             transform: translateY(-6px);
             box-shadow: var(--shadow-hover);
             border-color: var(--accent);
         }
-
         .project-card .icon {
             font-size: 2.2rem;
             color: var(--accent);
@@ -680,7 +657,6 @@
             font-weight: 600;
             padding: 4px 12px;
             border-radius: 100px;
-            letter-spacing: 0.02em;
         }
 
         /* ===== CONTACT ===== */
@@ -706,10 +682,11 @@
             align-items: center;
             gap: 16px;
             margin-bottom: 20px;
+            position: relative;
         }
+
         .contact-item .icon {
-            width: 48px;
-            height: 48px;
+            width: 48px; height: 48px;
             border-radius: 50%;
             background: var(--accent-light);
             color: var(--accent);
@@ -718,6 +695,11 @@
             justify-content: center;
             font-size: 1.2rem;
             flex-shrink: 0;
+        }
+
+        .contact-item > div {
+            flex: 1;
+            min-width: 0;
         }
         .contact-item div strong {
             display: block;
@@ -728,14 +710,44 @@
             font-size: 0.95rem;
         }
 
+        .copy-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            width: 36px; height: 36px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            transition: all var(--transition);
+            flex-shrink: 0;
+        }
+        .copy-btn:hover {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+        .copy-btn.copied {
+            background: #22c55e;
+            color: #fff;
+            border-color: #22c55e;
+        }
+
+        .vcard-btn {
+            margin-top: 20px;
+            width: 100%;
+            justify-content: center;
+        }
+
         .social-links {
             display: flex;
             gap: 16px;
             margin-top: 28px;
         }
         .social-links a {
-            width: 44px;
-            height: 44px;
+            width: 44px; height: 44px;
             border-radius: 50%;
             border: 1px solid var(--border);
             display: flex;
@@ -758,10 +770,7 @@
             border-radius: var(--radius);
             padding: 32px;
         }
-
-        .contact-form .form-group {
-            margin-bottom: 20px;
-        }
+        .contact-form .form-group { margin-bottom: 20px; }
         .contact-form label {
             font-weight: 500;
             font-size: 0.9rem;
@@ -786,14 +795,8 @@
             border-color: var(--accent);
             box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
         }
-        .contact-form textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-        .contact-form .btn {
-            width: 100%;
-            justify-content: center;
-        }
+        .contact-form textarea { resize: vertical; min-height: 120px; }
+        .contact-form .btn { width: 100%; justify-content: center; }
 
         /* ===== FOOTER ===== */
         footer {
@@ -803,9 +806,7 @@
             color: var(--text-muted);
             font-size: 0.9rem;
         }
-        footer span {
-            color: var(--accent);
-        }
+        footer span { color: var(--accent); }
 
         /* ===== CHIPS ===== */
         .chip {
@@ -817,7 +818,6 @@
             font-weight: 500;
             transition: background 0.5s ease, box-shadow 0.5s ease, transform 0.3s ease, color 0.5s ease;
         }
-
         .chip.glow {
             background: var(--accent);
             color: #fff;
@@ -826,13 +826,9 @@
         }
 
         /* ===== COUNTER ===== */
-        #counter,
         [data-counter] {
             font-variant-numeric: tabular-nums;
             display: inline-block;
-        }
-        #counter {
-            min-width: 3.2ch;
         }
 
         /* ============================================================
@@ -843,22 +839,12 @@
             inset: 0;
             pointer-events: none;
             overflow: hidden;
-            z-index: 1; /* под контентом, чтобы не перекрывать текст */
+            z-index: 1;
             transition: opacity 0.6s ease;
         }
-        #leafLayer.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
+        #leafLayer.hidden { opacity: 0; pointer-events: none; }
 
-        /* Контентные секции — выше листьев */
-        header,
-        main,
-        section,
-        footer {
-            position: relative;
-            z-index: 2;
-        }
+        header, main, section, footer { position: relative; z-index: 2; }
 
         .leaf {
             position: absolute;
@@ -872,39 +858,60 @@
         }
 
         @keyframes leaf-fall {
-            0% {
-                transform: translate3d(0, -10vh, 0) rotate(0deg);
-                opacity: 0;
-            }
+            0% { transform: translate3d(0, -10vh, 0) rotate(0deg); opacity: 0; }
             8% { opacity: 1; }
             50% { transform: translate3d(30px, 50vh, 0) rotate(180deg); }
+            100% { transform: translate3d(-20px, 110vh, 0) rotate(360deg); opacity: 0.9; }
+        }
+
+        /* ===== TOAST ===== */
+        #toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--accent);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 100px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+            z-index: 1200;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+        }
+        #toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ===== ПАСХАЛКА: bug party ===== */
+        .bug {
+            position: fixed;
+            font-size: 32px;
+            z-index: 1300;
+            pointer-events: none;
+            user-select: none;
+            animation: bug-run 3s ease-out forwards;
+        }
+        @keyframes bug-run {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
             100% {
-                transform: translate3d(-20px, 110vh, 0) rotate(360deg);
-                opacity: 0.9;
+                transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(0.5);
+                opacity: 0;
             }
         }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 1024px) {
-            .hero-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .hero-content p {
-                margin-left: auto;
-                margin-right: auto;
-            }
+            .hero-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero-content p { margin-left: auto; margin-right: auto; }
             .hero-buttons { justify-content: center; }
             .hero-stats { justify-content: center; }
-            .hero-avatar {
-                width: 280px;
-                height: 280px;
-                font-size: 5rem;
-            }
-            .about-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
+            .hero-avatar { width: 280px; height: 280px; font-size: 5rem; }
+            .about-grid { grid-template-columns: 1fr; text-align: center; }
             .about-info { justify-items: center; }
             .contact-wrap { grid-template-columns: 1fr; }
         }
@@ -912,8 +919,7 @@
         @media (max-width: 768px) {
             .nav-links {
                 position: fixed;
-                top: 72px;
-                left: 0;
+                top: 72px; left: 0;
                 width: 100%;
                 background: var(--bg-secondary);
                 flex-direction: column;
@@ -931,28 +937,17 @@
             .hamburger { display: flex; }
             .hero-content h1 { font-size: 2.6rem; }
             .section-title { font-size: 2rem; }
-
-            .timeline-item {
-                padding: 22px;
-            }
-            .timeline-item .year {
-                font-size: 0.75rem;
-            }
-
+            .timeline-item { padding: 22px; }
+            .timeline-item .year { font-size: 0.75rem; }
             .projects-grid { grid-template-columns: 1fr; }
             .hero-stats { flex-wrap: wrap; gap: 20px; }
-
             .timeline-item::before { opacity: 0.3; }
             [data-theme="dark"] .timeline-item::before { opacity: 0.35; }
         }
 
         @media (max-width: 480px) {
             .hero-content h1 { font-size: 2rem; }
-            .hero-avatar {
-                width: 200px;
-                height: 200px;
-                font-size: 3.6rem;
-            }
+            .hero-avatar { width: 200px; height: 200px; font-size: 3.6rem; }
             .container { padding: 0 16px; }
             section { padding: 60px 0; }
             .leaf { font-size: 16px; }
@@ -962,7 +957,7 @@
 
 <body>
 
-    <!-- ===== СЛОЙ ДЛЯ ПАДАЮЩИХ ЛИСТОЧКОВ ===== -->
+    <div id="progressBar" aria-hidden="true"></div>
     <div id="leafLayer" aria-hidden="true"></div>
 
     <!-- ===== HEADER ===== -->
@@ -973,13 +968,14 @@
             <ul class="nav-links" id="navLinks">
                 <li><a href="#about">Обо мне</a></li>
                 <li><a href="#skills">Навыки</a></li>
+                <li><a href="#skilltree">Карта</a></li>
                 <li><a href="#experience">Опыт</a></li>
                 <li><a href="#projects">Проекты</a></li>
                 <li><a href="#contact">Контакты</a></li>
             </ul>
 
             <div class="nav-actions">
-                <button class="season-toggle" id="seasonToggle" aria-label="Включить/выключить сезонные листья" title="Сезонные листья">
+                <button class="season-toggle" id="seasonToggle" aria-label="Сезонные листья" title="Сезонные листья">
                     <i class="fas fa-leaf" id="seasonIcon"></i>
                 </button>
                 <button class="theme-toggle" id="themeToggle" aria-label="Сменить тему">
@@ -1009,10 +1005,10 @@
                     Работал в FinTech, энергетике и корпоративном секторе.
                 </p>
                 <div class="hero-buttons">
-                    <a href="#contact" class="btn btn-primary">
+                    <a href="#contact" class="btn btn-primary magnetic">
                         <i class="fas fa-paper-plane"></i> Связаться
                     </a>
-                    <a href="resume.pdf" class="btn btn-outline" target="_blank" download="Леонид Владимирович Филатов.pdf">
+                    <a href="resume.pdf" class="btn btn-outline magnetic" target="_blank" download="Леонид Владимирович Филатов.pdf">
                         <i class="fas fa-file-pdf"></i> Резюме (PDF)
                     </a>
                 </div>
@@ -1026,7 +1022,7 @@
                         <p>Крупных проектов</p>
                     </div>
                     <div class="stat">
-                        <h3 id="counter" data-counter data-target="1500" data-suffix="+">0</h3>
+                        <h3 data-counter data-target="1500" data-suffix="+">0</h3>
                         <p>Тест-кейсов</p>
                     </div>
                 </div>
@@ -1034,7 +1030,7 @@
             <div class="hero-image">
                 <div class="hero-avatar">
                     <div class="ring"></div>
-                    <img src="images/Photo.jpg" alt="Фото Леонида" />
+                    <img src="images/Photo.jpg" alt="Фото Леонида" loading="eager" decoding="async" />
                 </div>
             </div>
         </div>
@@ -1062,7 +1058,7 @@
                 </p>
 
                 <div class="photo-block">
-                    <img src="images/Untitled.png" alt="Дополнительное фото" />
+                    <img src="images/Untitled.png" alt="Дополнительное фото" loading="lazy" decoding="async" />
                 </div>
 
                 <ul class="about-info">
@@ -1073,7 +1069,9 @@
                 </ul>
             </div>
             <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px;">
-                <h3 style="font-weight: 600; margin-bottom: 8px;">📚 Мой подход</h3>
+                <h3 style="font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-book-open" style="color: var(--accent);"></i> Мой подход
+                </h3>
                 <p style="color: var(--text-secondary);">
                     Верю, что качество закладывается на всех этапах разработки. Участвую в раннем тестировании,
                     анализирую требования, пишу понятные баг-репорты и поддерживаю тестовую документацию в актуальном состоянии.
@@ -1147,8 +1145,65 @@
         </div>
     </section>
 
+    <!-- ===== SKILL TREE ===== -->
+    <section id="skilltree">
+        <div class="container">
+            <span class="section-label">Карта навыков</span>
+            <h2 class="section-title">Как всё <span>связано</span></h2>
+            <p class="section-desc">Визуальная карта моих компетенций по направлениям QA.</p>
+
+            <div class="skill-tree">
+                <svg viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Карта навыков QA">
+                    <path class="st-branch" d="M 450 250 L 150 100" />
+                    <path class="st-branch" d="M 450 250 L 150 250" />
+                    <path class="st-branch" d="M 450 250 L 150 400" />
+                    <path class="st-branch" d="M 450 250 L 450 100" />
+                    <path class="st-branch" d="M 450 250 L 450 400" />
+                    <path class="st-branch" d="M 450 250 L 750 100" />
+                    <path class="st-branch" d="M 450 250 L 750 250" />
+                    <path class="st-branch" d="M 450 250 L 750 400" />
+
+                    <circle class="st-node-center" cx="450" cy="250" r="55" />
+                    <text class="st-node-center-text" x="450" y="250">QA</text>
+
+                    <circle class="st-node-bg" cx="150" cy="100" r="40" />
+                    <text class="st-node-text" x="150" y="100">Testing</text>
+                    <text class="st-leaf-text" x="150" y="55">Functional · Regression</text>
+
+                    <circle class="st-node-bg" cx="150" cy="250" r="40" />
+                    <text class="st-node-text" x="150" y="250">API</text>
+                    <text class="st-leaf-text" x="150" y="205">REST · Swagger</text>
+
+                    <circle class="st-node-bg" cx="150" cy="400" r="40" />
+                    <text class="st-node-text" x="150" y="400">Tools</text>
+                    <text class="st-leaf-text" x="150" y="455">Postman · Charles</text>
+
+                    <circle class="st-node-bg" cx="450" cy="100" r="40" />
+                    <text class="st-node-text" x="450" y="100">DB</text>
+                    <text class="st-leaf-text" x="450" y="55">SQL · Kibana</text>
+
+                    <circle class="st-node-bg" cx="450" cy="400" r="40" />
+                    <text class="st-node-text" x="450" y="400">Docs</text>
+                    <text class="st-leaf-text" x="450" y="455">Jira · TestRail</text>
+
+                    <circle class="st-node-bg" cx="750" cy="100" r="40" />
+                    <text class="st-node-text" x="750" y="100">Mobile</text>
+                    <text class="st-leaf-text" x="750" y="55">Android · iOS</text>
+
+                    <circle class="st-node-bg" cx="750" cy="250" r="40" />
+                    <text class="st-node-text" x="750" y="250">Auto</text>
+                    <text class="st-leaf-text" x="750" y="205">Python (в процессе)</text>
+
+                    <circle class="st-node-bg" cx="750" cy="400" r="40" />
+                    <text class="st-node-text" x="750" y="400">Process</text>
+                    <text class="st-leaf-text" x="750" y="455">Scrum · Shift-left</text>
+                </svg>
+            </div>
+        </div>
+    </section>
+
     <!-- ===== EXPERIENCE ===== -->
-    <section id="experience">
+    <section id="experience" style="background: var(--bg-secondary);">
         <div class="container">
             <span class="section-label">Опыт работы</span>
             <h2 class="section-title">Мой <span>путь</span></h2>
@@ -1156,7 +1211,6 @@
 
             <div class="timeline">
 
-                <!-- Дельта -->
                 <div class="timeline-item item-delta">
                     <span class="year">Апр 2026 — Июл 2026</span>
                     <h3>Инженер по тестированию и поддержке пользователей L2</h3>
@@ -1172,7 +1226,6 @@
                     </div>
                 </div>
 
-                <!-- РусГидро -->
                 <div class="timeline-item item-rusgidro">
                     <span class="year">Мар 2025 — Дек 2025</span>
                     <h3>QA инженер (Web/API)</h3>
@@ -1190,7 +1243,6 @@
                     </div>
                 </div>
 
-                <!-- STRONG TEAM -->
                 <div class="timeline-item item-strong">
                     <span class="year">Авг 2023 — Фев 2025</span>
                     <h3>QA Manual</h3>
@@ -1208,10 +1260,6 @@
                         <strong>Результат:</strong> Провёл более 24 циклов тестирования на проектах PORTAL, DOSTAVKA, Росбанк, БКС, ТВ‑приложение;
                         создал API-коллекции в Postman (210+ запросов для монолита, 100+ для микросервисов) с автоматизированными проверками.
                     </div>
-                    <div style="margin-top: 12px; font-size: 0.9rem; color: var(--text-muted);">
-                        <i class="fas fa-project-diagram"></i> Проекты: PORTAL (внутренний портал), DOSTAVKA (сервис доставки),
-                        Росбанк (внутреннее приложение), БКС (инвестиции, страхование, QR-код), ТВ‑приложение.
-                    </div>
                 </div>
 
             </div>
@@ -1219,7 +1267,7 @@
     </section>
 
     <!-- ===== PROJECTS ===== -->
-    <section id="projects" style="background: var(--bg-secondary);">
+    <section id="projects">
         <div class="container">
             <span class="section-label">Проекты</span>
             <h2 class="section-title">Ключевые <span>работы</span></h2>
@@ -1271,7 +1319,7 @@
     </section>
 
     <!-- ===== CONTACT ===== -->
-    <section id="contact">
+    <section id="contact" style="background: var(--bg-secondary);">
         <div class="container">
             <span class="section-label">Контакты</span>
             <h2 class="section-title">Давайте <span>общаться</span></h2>
@@ -1288,21 +1336,36 @@
                             <strong>Email</strong>
                             <span>filya7699@yandex.ru</span>
                         </div>
+                        <button class="copy-btn" data-copy-target="filya7699@yandex.ru" aria-label="Скопировать email">
+                            <i class="fas fa-copy"></i>
+                        </button>
                     </div>
+
                     <div class="contact-item">
                         <div class="icon"><i class="fas fa-phone-alt"></i></div>
                         <div>
                             <strong>Телефон</strong>
                             <span>+7 999 786-65-12</span>
                         </div>
+                        <button class="copy-btn" data-copy-target="+79997866512" aria-label="Скопировать телефон">
+                            <i class="fas fa-copy"></i>
+                        </button>
                     </div>
+
                     <div class="contact-item">
                         <div class="icon"><i class="fab fa-telegram-plane"></i></div>
                         <div>
                             <strong>Telegram</strong>
                             <span>@lenyafeel</span>
                         </div>
+                        <button class="copy-btn" data-copy-target="@lenyafeel" aria-label="Скопировать Telegram">
+                            <i class="fas fa-copy"></i>
+                        </button>
                     </div>
+
+                    <button class="btn btn-primary vcard-btn magnetic" id="downloadVCard">
+                        <i class="fas fa-address-card"></i> Скачать vCard
+                    </button>
 
                     <div class="social-links">
                         <a href="https://t.me/lenyafeel" target="_blank" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
@@ -1325,7 +1388,7 @@
                         <label for="message">Сообщение</label>
                         <textarea id="message" placeholder="Расскажите о вашем проекте..." required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary magnetic">
                         <i class="fas fa-paper-plane"></i> Отправить
                     </button>
                 </form>
@@ -1336,19 +1399,21 @@
     <!-- ===== FOOTER ===== -->
     <footer>
         <div class="container">
-            <p>
-                &copy; 2026 <span>Леонид</span> · QA-инженер
-            </p>
+            <p>&copy; 2026 <span>Леонид</span> · QA-инженер</p>
         </div>
     </footer>
 
-    <script>
-        // ===== THEME TOGGLE =====
-        const themeToggle = document.getElementById('themeToggle');
+    <div id="toast" role="status" aria-live="polite"></div>
 
-        const currentTheme = localStorage.getItem('theme') || 'light';
-        if (currentTheme === 'dark') {
+    <script>
+        // ===== THEME: авто по системе, если не выбрано вручную =====
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
             document.documentElement.setAttribute('data-theme', 'dark');
+        } else if (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
         }
 
         themeToggle.addEventListener('click', () => {
@@ -1362,18 +1427,27 @@
             }
         });
 
+        // ===== READING PROGRESS BAR =====
+        const progressBar = document.getElementById('progressBar');
+        let rafId = null;
+        function updateProgress() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            progressBar.style.width = percent + '%';
+            rafId = null;
+        }
+        window.addEventListener('scroll', () => {
+            if (rafId === null) rafId = requestAnimationFrame(updateProgress);
+        }, { passive: true });
+        updateProgress();
+
         // ===== MOBILE MENU =====
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('navLinks');
-
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('open');
-        });
-
+        hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
         document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('open');
-            });
+            link.addEventListener('click', () => navLinks.classList.remove('open'));
         });
 
         // ===== SMOOTH SCROLL =====
@@ -1397,12 +1471,10 @@
             const name = document.getElementById('name').value.trim();
             const email = document.getElementById('email').value.trim();
             const message = document.getElementById('message').value.trim();
-
             if (!name || !email || !message) {
                 alert('Пожалуйста, заполните все поля.');
                 return;
             }
-
             alert('Спасибо, ' + name + '! Ваше сообщение отправлено. Я свяжусь с вами в ближайшее время.');
             this.reset();
         });
@@ -1416,57 +1488,51 @@
             const duration = 1500;
             let started = false;
 
-            const counterObserver = new IntersectionObserver((entries) => {
+            const obs = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting && !started) {
                         started = true;
                         const startTime = performance.now();
-
                         const tick = (now) => {
-                            const elapsed = now - startTime;
-                            const progress = Math.min(elapsed / duration, 1);
-                            const eased = 1 - Math.pow(1 - progress, 3);
-                            const value = target * eased;
-                            counter.textContent = value.toFixed(decimals) + suffix;
-                            if (progress < 1) requestAnimationFrame(tick);
+                            const p = Math.min((now - startTime) / duration, 1);
+                            const eased = 1 - Math.pow(1 - p, 3);
+                            counter.textContent = (target * eased).toFixed(decimals) + suffix;
+                            if (p < 1) requestAnimationFrame(tick);
                         };
-
                         requestAnimationFrame(tick);
-                        counterObserver.disconnect();
+                        obs.disconnect();
                     }
                 });
             }, { threshold: 0.5 });
-
-            counterObserver.observe(counter);
+            obs.observe(counter);
         });
 
-        // ===== CHIP GLOW ANIMATION =====
+        // ===== CHIP GLOW =====
         const chips = document.querySelectorAll('.chip');
         if (chips.length) {
             setInterval(() => {
-                const randomChip = chips[Math.floor(Math.random() * chips.length)];
-                randomChip.classList.add('glow');
-                setTimeout(() => randomChip.classList.remove('glow'), 900);
+                const c = chips[Math.floor(Math.random() * chips.length)];
+                c.classList.add('glow');
+                setTimeout(() => c.classList.remove('glow'), 900);
             }, 1200);
         }
 
         // ===== REVEAL ANIMATION =====
         const cards = document.querySelectorAll('.skill-card, .project-card, .timeline-item');
         if (cards.length) {
-            const cardObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
+            const obs = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        e.target.style.opacity = '1';
+                        e.target.style.transform = 'translateY(0)';
                     }
                 });
             }, { threshold: 0.15 });
-
             cards.forEach(card => {
                 card.style.opacity = '0';
                 card.style.transform = 'translateY(20px)';
                 card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                cardObserver.observe(card);
+                obs.observe(card);
             });
         }
 
@@ -1477,51 +1543,23 @@
         const seasonToggle = document.getElementById('seasonToggle');
         const seasonIcon = document.getElementById('seasonIcon');
 
-        // Определяем сезон по месяцу
         function getSeason() {
-            const month = new Date().getMonth(); // 0 = январь
-            if (month >= 2 && month <= 4) return 'spring';   // март–май
-            if (month >= 5 && month <= 7) return 'summer';   // июнь–август
-            if (month >= 8 && month <= 10) return 'autumn';  // сентябрь–ноябрь
-            return 'winter';                                  // декабрь–февраль
+            const month = new Date().getMonth();
+            if (month >= 2 && month <= 4) return 'spring';
+            if (month >= 5 && month <= 7) return 'summer';
+            if (month >= 8 && month <= 10) return 'autumn';
+            return 'winter';
         }
 
-        // Настройки для каждого сезона
         const SEASONS = {
-            spring: {
-                emojis: ['🌸', '🌷', '🌺', '🌼', '🍃'],
-                color: '#ec4899',
-                icon: 'fa-seedling',
-                count: 16,
-                label: 'Весенние лепестки'
-            },
-            summer: {
-                emojis: ['🌿', '🍃', '🌱', '☘️'],
-                color: '#22c55e',
-                icon: 'fa-sun',
-                count: 14,
-                label: 'Летняя зелень'
-            },
-            autumn: {
-                emojis: ['🍁', '🍂', '🍃', '🌿'],
-                color: '#d97706',
-                icon: 'fa-leaf',
-                count: 18,
-                label: 'Осенние листья'
-            },
-            winter: {
-                emojis: ['❄️', '❄', '🌨️', '✻'],
-                color: '#0ea5e9',
-                icon: 'fa-snowflake',
-                count: 22,
-                label: 'Зимний снег'
-            }
+            spring: { emojis: ['🌸','🌷','🌺','🌼','🍃'], color: '#ec4899', icon: 'fa-seedling', count: 16, label: 'Весенние лепестки' },
+            summer: { emojis: ['🌿','🍃','🌱','☘️'], color: '#22c55e', icon: 'fa-sun', count: 14, label: 'Летняя зелень' },
+            autumn: { emojis: ['🍁','🍂','🍃','🌿'], color: '#d97706', icon: 'fa-leaf', count: 18, label: 'Осенние листья' },
+            winter: { emojis: ['❄️','❄','🌨️','✻'], color: '#0ea5e9', icon: 'fa-snowflake', count: 22, label: 'Зимний снег' }
         };
 
         const currentSeason = getSeason();
         const seasonConfig = SEASONS[currentSeason];
-
-        // Применяем иконку и цвет кнопки
         seasonIcon.className = 'fas ' + seasonConfig.icon;
         seasonToggle.style.setProperty('--season-color', seasonConfig.color);
         seasonToggle.title = seasonConfig.label;
@@ -1531,7 +1569,6 @@
             leaf.className = 'leaf';
             leaf.textContent = seasonConfig.emojis[Math.floor(Math.random() * seasonConfig.emojis.length)];
             leaf.style.left = Math.random() * 100 + 'vw';
-
             if (currentSeason === 'winter') {
                 leaf.style.fontSize = (10 + Math.random() * 12) + 'px';
                 leaf.style.animationDuration = (10 + Math.random() * 10) + 's';
@@ -1539,10 +1576,8 @@
                 leaf.style.fontSize = (16 + Math.random() * 18) + 'px';
                 leaf.style.animationDuration = (8 + Math.random() * 8) + 's';
             }
-
             leaf.style.animationDelay = (-Math.random() * 10) + 's';
             leaf.style.opacity = 0.6 + Math.random() * 0.4;
-
             if (currentSeason !== 'winter' && Math.random() > 0.5) {
                 leaf.style.filter = `hue-rotate(${Math.random() * 40 - 20}deg) drop-shadow(0 2px 3px rgba(0,0,0,0.08))`;
             }
@@ -1550,12 +1585,10 @@
         }
 
         let leavesEnabled = localStorage.getItem('leaves') !== 'off';
-
         function buildLeaves(count) {
             leafLayer.innerHTML = '';
             for (let i = 0; i < count; i++) createLeaf();
         }
-
         function applyLeavesState() {
             if (leavesEnabled) {
                 leafLayer.classList.remove('hidden');
@@ -1566,14 +1599,143 @@
                 seasonToggle.classList.add('off');
             }
         }
-
         seasonToggle.addEventListener('click', () => {
             leavesEnabled = !leavesEnabled;
             localStorage.setItem('leaves', leavesEnabled ? 'on' : 'off');
             applyLeavesState();
         });
-
         applyLeavesState();
+
+        // ============================================================
+        // MAGNETIC BUTTONS
+        // ============================================================
+        const magneticEls = document.querySelectorAll('.magnetic');
+        const MAGNETIC_STRENGTH = 8;
+        magneticEls.forEach(el => {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                const dx = (x / rect.width) * MAGNETIC_STRENGTH * 2;
+                const dy = (y / rect.height) * MAGNETIC_STRENGTH * 2;
+                el.style.transform = `translate(${dx}px, ${dy}px)`;
+            });
+            el.addEventListener('mouseleave', () => {
+                el.style.transform = 'translate(0, 0)';
+            });
+        });
+
+        // ============================================================
+        // TOAST + COPY CONTACTS
+        // ============================================================
+        const toast = document.getElementById('toast');
+        let toastTimer = null;
+        function showToast(msg) {
+            toast.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        async function copyToClipboard(text) {
+            try {
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(text);
+                } else {
+                    const ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.style.position = 'fixed';
+                    ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(ta);
+                }
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const text = btn.dataset.copyTarget;
+                const ok = await copyToClipboard(text);
+                if (ok) {
+                    btn.classList.add('copied');
+                    btn.innerHTML = '<i class="fas fa-check"></i>';
+                    showToast('Скопировано: ' + text);
+                    setTimeout(() => {
+                        btn.classList.remove('copied');
+                        btn.innerHTML = '<i class="fas fa-copy"></i>';
+                    }, 1600);
+                } else {
+                    showToast('Не удалось скопировать');
+                }
+            });
+        });
+
+        // ============================================================
+        // VCARD
+        // ============================================================
+        document.getElementById('downloadVCard').addEventListener('click', () => {
+            const vcard = [
+                'BEGIN:VCARD',
+                'VERSION:3.0',
+                'N:Филатов;Леонид;;;',
+                'FN:Леонид Филатов',
+                'TITLE:QA Engineer (Web/API)',
+                'EMAIL;type=INTERNET;type=WORK:filya7699@yandex.ru',
+                'TEL;type=CELL:+79997866512',
+                'URL:https://leonid-filatov.github.io/Mylanding/',
+                'X-SOCIALPROFILE;type=telegram:https://t.me/lenyafeel',
+                'NOTE:QA Engineer. 2.5+ года опыта. Web/API, микросервисы, FinTech.',
+                'END:VCARD'
+            ].join('\r\n');
+
+            const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Leonid_Filatov.vcf';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('vCard скачана');
+        });
+
+        // ============================================================
+        // ПАСХАЛКА: наберите "qa"
+        // ============================================================
+        let keyBuffer = '';
+        window.addEventListener('keydown', (e) => {
+            if (e.target.matches('input, textarea')) return;
+            keyBuffer = (keyBuffer + e.key.toLowerCase()).slice(-3);
+            if (keyBuffer === 'qa') {
+                runBugParty();
+                keyBuffer = '';
+            }
+        });
+
+        function runBugParty() {
+            const bugs = ['🐛', '🐞', '🦟', '🪲'];
+            const N = 20;
+            for (let i = 0; i < N; i++) {
+                const b = document.createElement('span');
+                b.className = 'bug';
+                b.textContent = bugs[Math.floor(Math.random() * bugs.length)];
+                b.style.left = '50vw';
+                b.style.top = '50vh';
+                b.style.setProperty('--dx', (Math.random() * 800 - 400) + 'px');
+                b.style.setProperty('--dy', (Math.random() * 600 - 300) + 'px');
+                b.style.setProperty('--rot', (Math.random() * 720 - 360) + 'deg');
+                b.style.animationDelay = (Math.random() * 0.3) + 's';
+                document.body.appendChild(b);
+                setTimeout(() => b.remove(), 3200);
+            }
+            showToast('🐛 QA-пасхалка! Баги разбежались');
+        }
     </script>
 
 </body>
