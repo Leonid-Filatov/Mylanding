@@ -48,8 +48,6 @@
             --radius: 16px;
             --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --font: 'Inter', sans-serif;
-            --header-bg: rgba(255, 255, 255, 0.7);
-            --header-border: rgba(226, 232, 240, 0.7);
         }
 
         [data-theme="dark"] {
@@ -63,8 +61,6 @@
             --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
             --shadow-hover: 0 8px 40px rgba(99, 102, 241, 0.25);
             --accent-light: #1e1b4b;
-            --header-bg: rgba(15, 23, 42, 0.55);
-            --header-border: rgba(51, 65, 85, 0.7);
         }
 
         html { scroll-behavior: smooth; }
@@ -129,18 +125,18 @@
             pointer-events: none;
         }
 
-        /* ============================================================
-           HEADER — статичный, слегка прозрачный
-           ============================================================ */
+        /* ===== HEADER (фиксированный) ===== */
         header {
-            position: static;                 /* не фиксируется при скролле */
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            background: var(--header-bg);      /* полупрозрачный фон */
+            z-index: 1000;
+            background: rgba(var(--bg-secondary), 0.75);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--header-border);
+            border-bottom: 1px solid var(--border);
             transition: background var(--transition), border var(--transition);
-            z-index: 100;
         }
 
         .nav {
@@ -237,9 +233,9 @@
 
         /* ===== HERO ===== */
         .hero {
-            padding-top: 40px;       /* было 140 — уменьшено, т.к. header теперь в потоке */
+            padding-top: 140px;
             padding-bottom: 80px;
-            min-height: calc(100vh - 72px);
+            min-height: 100vh;
             display: flex;
             align-items: center;
         }
@@ -818,7 +814,7 @@
         }
         #leafLayer.hidden { opacity: 0; pointer-events: none; }
 
-        main, section, footer { position: relative; z-index: 2; }
+        header, main, section, footer { position: relative; z-index: 2; }
 
         .leaf {
             position: absolute;
@@ -967,9 +963,8 @@
         }
 
         @media (max-width: 768px) {
-            /* Мобильное меню открывается поверх всего — оставляем absolute */
             .nav-links {
-                position: absolute;
+                position: fixed;
                 top: 72px; left: 0;
                 width: 100%;
                 background: var(--bg-secondary);
@@ -983,7 +978,6 @@
                 flex: none;
                 justify-content: flex-start;
                 margin: 0;
-                z-index: 200;
             }
             .nav-links.open { transform: translateY(0); }
             .hamburger { display: flex; }
@@ -1450,7 +1444,7 @@
                 e.preventDefault();
                 const target = document.querySelector(href);
                 if (target) {
-                    const offset = 20;   /* хедер больше не фиксирован — отступ не нужен */
+                    const offset = 80;
                     const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
                     window.scrollTo({ top, behavior: 'smooth' });
                 }
@@ -1660,7 +1654,8 @@
             });
         });
 
-        // ===== VCARD =====        document.getElementById('downloadVCard').addEventListener('click', () => {
+        // ===== VCARD =====
+        document.getElementById('downloadVCard').addEventListener('click', () => {
             const vcard = [
                 'BEGIN:VCARD',
                 'VERSION:3.0',
