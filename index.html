@@ -1442,7 +1442,6 @@
 
     <div id="toast" role="status" aria-live="polite"></div>
 
-    <!-- Стрелки справа (как было) -->
     <div id="scrollArrows">
         <button id="scrollUp" aria-label="Наверх" title="Наверх">
             <i class="fas fa-arrow-up"></i>
@@ -1452,7 +1451,6 @@
         </button>
     </div>
 
-    <!-- Стрелки слева (дубликат) -->
     <div id="scrollArrowsLeft">
         <button id="scrollUpLeft" aria-label="Наверх" title="Наверх">
             <i class="fas fa-arrow-up"></i>
@@ -1503,7 +1501,6 @@
             const heroBottom = heroEl ? heroEl.offsetHeight - 100 : 600;
             const inHero = scrollTop < heroBottom;
 
-            // правая пара
             if (inHero) {
                 scrollUpBtn.classList.remove('visible');
                 scrollDownBtn.classList.add('visible');
@@ -1512,7 +1509,6 @@
                 scrollUpBtn.classList.add('visible');
             }
 
-            // левая пара — та же логика
             if (inHero) {
                 scrollUpBtnLeft.classList.remove('visible');
                 scrollDownBtnLeft.classList.add('visible');
@@ -1541,7 +1537,6 @@
         });
         updateScrollUI();
 
-        // правая пара
         scrollUpBtn.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
@@ -1550,7 +1545,6 @@
             window.scrollTo({ top: docHeight, behavior: 'smooth' });
         });
 
-        // левая пара — те же действия
         scrollUpBtnLeft.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
