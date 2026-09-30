@@ -44,12 +44,11 @@
             --shadow-hover: 0 8px 40px rgba(99, 102, 241, 0.15);
             --radius: 16px;
             --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --theme-transition: 0.35s ease; /* #3 — ускорено с 0.6s до 0.35s */
+            --theme-transition: 0.35s ease;
             --font: 'Inter', sans-serif;
 
-            /* #1 — фон-паттерн: цвет точек под светлую тему */
+            /* Фон-паттерн: цвет точек под светлую тему */
             --bg-pattern: rgba(15, 23, 42, 0.06);
-            --bg-glow: rgba(99, 102, 241, 0.14);
         }
 
         [data-theme="dark"] {
@@ -64,14 +63,12 @@
             --shadow-hover: 0 8px 40px rgba(99, 102, 241, 0.25);
             --accent-light: #1e1b4b;
 
-            /* #1 — цвет точек под тёмную тему */
+            /* Фон-паттерн: цвет точек под тёмную тему */
             --bg-pattern: rgba(241, 245, 249, 0.05);
-            --bg-glow: rgba(139, 92, 246, 0.18);
         }
 
         html { scroll-behavior: smooth; }
 
-        /* ===== ПЛАВНЫЙ ПЕРЕХОД ТЕМЫ (быстрее) ===== */
         body,
         header,
         section,
@@ -135,7 +132,7 @@
             line-height: 1.6;
             overflow-x: hidden;
 
-            /* #1 — фон с точками */
+            /* Фон с точками — только паттерн, без градиента */
             background-color: var(--bg-primary);
             background-image:
                 radial-gradient(circle, var(--bg-pattern) 1px, transparent 1px);
@@ -158,7 +155,6 @@
             position: relative;
         }
 
-        /* Секции с явным фоном остаются непрозрачными, чтобы «шахматка» работала */
         section[style*="background"] {
             background-color: var(--bg-secondary) !important;
         }
@@ -319,32 +315,14 @@
             border-radius: 4px;
         }
 
-        /* ===== HERO ===== */
+        /* ===== HERO (без градиента) ===== */
         .hero {
             padding-top: 140px;
             padding-bottom: 80px;
             min-height: 100vh;
             display: flex;
             align-items: center;
-            position: relative;
-            overflow: hidden;
         }
-
-        /* #1 — мягкое радиальное свечение в hero */
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -20%;
-            right: -10%;
-            width: 720px;
-            height: 720px;
-            border-radius: 50%;
-            background: radial-gradient(circle, var(--bg-glow) 0%, transparent 65%);
-            pointer-events: none;
-            z-index: 0;
-            transition: background var(--theme-transition);
-        }
-        .hero .container { position: relative; z-index: 1; }
 
         .hero-grid {
             display: grid;
@@ -1023,7 +1001,6 @@
             .leaf { display: none; }
             .tilt-card { transform: none !important; }
             #scrollArrows button i { animation: none; }
-            .hero::before { display: none; }
         }
 
         @media (max-width: 1024px) {
@@ -1036,7 +1013,6 @@
             .about-info { justify-items: center; }
             .contact-wrap { grid-template-columns: 1fr; }
             .social-links { justify-content: flex-start; }
-            .hero::before { width: 500px; height: 500px; top: -30%; right: -20%; }
         }
 
         @media (max-width: 768px) {
@@ -1066,7 +1042,6 @@
             .hero-stats { flex-wrap: wrap; gap: 20px; }
             .timeline-item::before { opacity: 0.3; }
             [data-theme="dark"] .timeline-item::before { opacity: 0.35; }
-            .hero::before { width: 360px; height: 360px; }
         }
 
         @media (max-width: 480px) {
@@ -1435,9 +1410,7 @@
                     </div>
                 </div>
 
-                <!-- #2 — форма отправляется через FormSubmit.co на filya7699@yandex.ru -->
                 <form class="contact-form" id="contactForm" action="https://formsubmit.co/ajax/filya7699@yandex.ru" method="POST" novalidate>
-                    <!-- Служебные поля FormSubmit -->
                     <input type="hidden" name="_subject" value="Новое сообщение с портфолио" />
                     <input type="hidden" name="_template" value="table" />
                     <input type="hidden" name="_captcha" value="false" />
@@ -1591,7 +1564,7 @@
             toastTimer = setTimeout(() => toast.classList.remove('show'), 3500);
         }
 
-        // ===== CONTACT FORM (#2) — отправка через FormSubmit.co =====
+        // ===== CONTACT FORM — отправка через FormSubmit.co =====
         const contactForm = document.getElementById('contactForm');
         const submitBtn = document.getElementById('submitBtn');
 
