@@ -46,6 +46,13 @@
             --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --theme-transition: 0.35s ease;
             --font: 'Inter', sans-serif;
+
+            /* ===== МОЛЕКУЛЯРНАЯ СЕТЬ (светлая тема) ===== */
+            /* Цвет линий и точек — тёмно-синий с низкой прозрачностью */
+            --network-stroke: rgba(15, 23, 42, 0.075);
+            --network-node: rgba(99, 102, 241, 0.22);
+            --network-node-size: 2.4px;
+            --network-opacity: 1;
         }
 
         [data-theme="dark"] {
@@ -59,6 +66,10 @@
             --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
             --shadow-hover: 0 8px 40px rgba(99, 102, 241, 0.25);
             --accent-light: #1e1b4b;
+
+            /* ===== МОЛЕКУЛЯРНАЯ СЕТЬ (тёмная тема) ===== */
+            --network-stroke: rgba(148, 163, 184, 0.09);
+            --network-node: rgba(139, 92, 246, 0.32);
         }
 
         html { scroll-behavior: smooth; }
@@ -126,7 +137,46 @@
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
+            position: relative;
         }
+
+        /* ============================================================
+           МОЛЕКУЛЯРНАЯ СЕТЬ — фон всей страницы
+           Слой SVG через mask: линии и точки окрашиваются
+           переменными --network-stroke / --network-node
+           ============================================================ */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: var(--network-opacity);
+            transition: opacity var(--theme-transition);
+
+            /* SVG: 5 узлов + 6 связей. Маленькая бесшовная плитка 240×240. */
+            background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg stroke='%23000000' stroke-width='1' fill='none'%3E%3Cline x1='40' y1='40' x2='120' y2='40'/%3E%3Cline x1='120' y1='40' x2='120' y2='120'/%3E%3Cline x1='120' y1='120' x2='40' y2='120'/%3E%3Cline x1='40' y1='120' x2='40' y2='40'/%3E%3Cline x1='120' y1='120' x2='200' y2='120'/%3E%3Cline x1='200' y1='120' x2='200' y2='200'/%3E%3Cline x1='200' y1='200' x2='120' y2='200'/%3E%3Cline x1='120' y1='200' x2='40' y2='200'/%3E%3Cline x1='40' y1='200' x2='40' y2='120'/%3E%3Cline x1='120' y1='40' x2='200' y2='40'/%3E%3Cline x1='200' y1='40' x2='200' y2='120'/%3E%3C/g%3E%3Cg fill='%23000000'%3E%3Ccircle cx='40' cy='40' r='2.4'/%3E%3Ccircle cx='120' cy='40' r='2.4'/%3E%3Ccircle cx='200' cy='40' r='2.4'/%3E%3Ccircle cx='40' cy='120' r='2.4'/%3E%3Ccircle cx='120' cy='120' r='2.4'/%3E%3Ccircle cx='200' cy='120' r='2.4'/%3E%3Ccircle cx='40' cy='200' r='2.4'/%3E%3Ccircle cx='120' cy='200' r='2.4'/%3E%3Ccircle cx='200' cy='200' r='2.4'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 240px 240px;
+            background-repeat: repeat;
+            background-attachment: fixed;
+
+            /* Линии окрашиваются в --network-stroke, узлы — в --network-node */
+            -webkit-mask-image:
+                linear-gradient(#000, #000),
+                radial-gradient(circle, #000 2.4px, transparent 2.6px);
+            mask-image:
+                linear-gradient(#000, #000),
+                radial-gradient(circle, #000 2.4px, transparent 2.6px);
+            -webkit-mask-composite: source-over;
+            mask-composite: add;
+            -webkit-mask-size: 240px 240px, 240px 240px;
+            mask-size: 240px 240px, 240px 240px;
+            -webkit-mask-repeat: repeat, repeat;
+            mask-repeat: repeat, repeat;
+        }
+
+        /* Слой поверх фона: контент всегда выше сети */
+        header, main, section, footer { position: relative; z-index: 2; }
 
         a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
@@ -868,12 +918,10 @@
             inset: 0;
             pointer-events: none;
             overflow: hidden;
-            z-index: 1;
+            z-index: 3;
             transition: opacity var(--theme-transition);
         }
         #leafLayer.hidden { opacity: 0; pointer-events: none; }
-
-        main, section, footer { position: relative; z-index: 2; }
 
         .leaf {
             position: absolute;
