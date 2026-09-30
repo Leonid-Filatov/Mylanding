@@ -44,8 +44,12 @@
             --shadow-hover: 0 8px 40px rgba(99, 102, 241, 0.15);
             --radius: 16px;
             --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --theme-transition: 0.6s ease;
+            --theme-transition: 0.35s ease; /* #3 — ускорено с 0.6s до 0.35s */
             --font: 'Inter', sans-serif;
+
+            /* #1 — фон-паттерн: цвет точек под светлую тему */
+            --bg-pattern: rgba(15, 23, 42, 0.06);
+            --bg-glow: rgba(99, 102, 241, 0.14);
         }
 
         [data-theme="dark"] {
@@ -59,10 +63,15 @@
             --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
             --shadow-hover: 0 8px 40px rgba(99, 102, 241, 0.25);
             --accent-light: #1e1b4b;
+
+            /* #1 — цвет точек под тёмную тему */
+            --bg-pattern: rgba(241, 245, 249, 0.05);
+            --bg-glow: rgba(139, 92, 246, 0.18);
         }
 
         html { scroll-behavior: smooth; }
 
+        /* ===== ПЛАВНЫЙ ПЕРЕХОД ТЕМЫ (быстрее) ===== */
         body,
         header,
         section,
@@ -122,10 +131,16 @@
 
         body {
             font-family: var(--font);
-            background: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
+
+            /* #1 — фон с точками */
+            background-color: var(--bg-primary);
+            background-image:
+                radial-gradient(circle, var(--bg-pattern) 1px, transparent 1px);
+            background-size: 24px 24px;
+            background-attachment: fixed;
         }
 
         a { text-decoration: none; color: inherit; }
@@ -138,7 +153,15 @@
             padding: 0 24px;
         }
 
-        section { padding: 80px 0; }
+        section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        /* Секции с явным фоном остаются непрозрачными, чтобы «шахматка» работала */
+        section[style*="background"] {
+            background-color: var(--bg-secondary) !important;
+        }
 
         .section-label {
             display: inline-block;
@@ -296,13 +319,32 @@
             border-radius: 4px;
         }
 
+        /* ===== HERO ===== */
         .hero {
             padding-top: 140px;
             padding-bottom: 80px;
             min-height: 100vh;
             display: flex;
             align-items: center;
+            position: relative;
+            overflow: hidden;
         }
+
+        /* #1 — мягкое радиальное свечение в hero */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 720px;
+            height: 720px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--bg-glow) 0%, transparent 65%);
+            pointer-events: none;
+            z-index: 0;
+            transition: background var(--theme-transition);
+        }
+        .hero .container { position: relative; z-index: 1; }
 
         .hero-grid {
             display: grid;
@@ -540,7 +582,7 @@
                 rgba(255, 255, 255, 0.68) 45%,
                 rgba(255, 255, 255, 0.5) 100%);
             z-index: -1;
-            transition: background 0.6s ease;
+            transition: background 0.4s ease;
             pointer-events: none;
         }
 
@@ -822,6 +864,10 @@
         }
         .contact-form textarea { resize: vertical; min-height: 120px; }
         .contact-form .btn { width: 100%; justify-content: center; }
+        .contact-form .btn[disabled] {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
 
         footer {
             border-top: 1px solid var(--border);
@@ -905,6 +951,8 @@
             opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
+        #toast.success { background: #22c55e; box-shadow: 0 10px 30px rgba(34, 197, 94, 0.4); }
+        #toast.error   { background: #ef4444; box-shadow: 0 10px 30px rgba(239, 68, 68, 0.4); }
 
         #scrollArrows {
             position: fixed;
@@ -975,6 +1023,7 @@
             .leaf { display: none; }
             .tilt-card { transform: none !important; }
             #scrollArrows button i { animation: none; }
+            .hero::before { display: none; }
         }
 
         @media (max-width: 1024px) {
@@ -987,6 +1036,7 @@
             .about-info { justify-items: center; }
             .contact-wrap { grid-template-columns: 1fr; }
             .social-links { justify-content: flex-start; }
+            .hero::before { width: 500px; height: 500px; top: -30%; right: -20%; }
         }
 
         @media (max-width: 768px) {
@@ -1016,6 +1066,7 @@
             .hero-stats { flex-wrap: wrap; gap: 20px; }
             .timeline-item::before { opacity: 0.3; }
             [data-theme="dark"] .timeline-item::before { opacity: 0.35; }
+            .hero::before { width: 360px; height: 360px; }
         }
 
         @media (max-width: 480px) {
@@ -1039,7 +1090,6 @@
         <div class="container nav">
             <a href="#" class="logo"><span>Quality Assurance</span></a>
 
-            <!-- Меню: сначала Проекты, потом Навыки -->
             <ul class="nav-links" id="navLinks">
                 <li><a href="#about" data-section="about">Обо мне</a></li>
                 <li><a href="#experience" data-section="experience">Опыт</a></li>
@@ -1165,7 +1215,6 @@
         </div>
     </section>
 
-    <!-- ===== EXPERIENCE ===== -->
     <section id="experience">
         <div class="container">
             <span class="section-label">Опыт работы</span>
@@ -1229,7 +1278,6 @@
         </div>
     </section>
 
-    <!-- ===== PROJECTS (перенесено наверх) ===== -->
     <section id="projects">
         <div class="container">
             <span class="section-label">Проекты</span>
@@ -1281,7 +1329,6 @@
         </div>
     </section>
 
-    <!-- ===== SKILLS (перенесено вниз, с bg-secondary) ===== -->
     <section id="skills" style="background: var(--bg-secondary);">
         <div class="container">
             <span class="section-label">Навыки</span>
@@ -1333,7 +1380,6 @@
         </div>
     </section>
 
-    <!-- ===== CONTACT ===== -->
     <section id="contact" style="background: var(--bg-secondary);">
         <div class="container">
             <span class="section-label">Контакты</span>
@@ -1389,20 +1435,27 @@
                     </div>
                 </div>
 
-                <form class="contact-form" id="contactForm">
+                <!-- #2 — форма отправляется через FormSubmit.co на filya7699@yandex.ru -->
+                <form class="contact-form" id="contactForm" action="https://formsubmit.co/ajax/filya7699@yandex.ru" method="POST" novalidate>
+                    <!-- Служебные поля FormSubmit -->
+                    <input type="hidden" name="_subject" value="Новое сообщение с портфолио" />
+                    <input type="hidden" name="_template" value="table" />
+                    <input type="hidden" name="_captcha" value="false" />
+                    <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+
                     <div class="form-group">
                         <label for="name">Ваше имя</label>
-                        <input type="text" id="name" placeholder="Иван Петров" required />
+                        <input type="text" id="name" name="name" placeholder="Иван Петров" required />
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" placeholder="ivan@example.com" required />
+                        <input type="email" id="email" name="email" placeholder="ivan@example.com" required />
                     </div>
                     <div class="form-group">
                         <label for="message">Сообщение</label>
-                        <textarea id="message" placeholder="Расскажите о вашем проекте..." required></textarea>
+                        <textarea id="message" name="message" placeholder="Расскажите о вашем проекте..." required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary magnetic">
+                    <button type="submit" class="btn btn-primary magnetic" id="submitBtn">
                         <i class="fas fa-paper-plane"></i> Отправить
                     </button>
                 </form>
@@ -1428,6 +1481,7 @@
     </div>
 
     <script>
+        // ===== THEME =====
         const themeToggle = document.getElementById('themeToggle');
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'dark') {
@@ -1447,6 +1501,7 @@
             }
         });
 
+        // ===== PROGRESS BAR + ARROWS + ACTIVE SECTION =====
         const progressBar = document.getElementById('progressBar');
         const scrollUpBtn = document.getElementById('scrollUp');
         const scrollDownBtn = document.getElementById('scrollDown');
@@ -1501,6 +1556,7 @@
             window.scrollTo({ top: docHeight, behavior: 'smooth' });
         });
 
+        // ===== MOBILE MENU =====
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('navLinks');
         hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
@@ -1508,6 +1564,7 @@
             link.addEventListener('click', () => navLinks.classList.remove('open'));
         });
 
+        // ===== SMOOTH SCROLL =====
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
@@ -1522,19 +1579,65 @@
             });
         });
 
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
+        // ===== TOAST =====
+        const toast = document.getElementById('toast');
+        let toastTimer = null;
+        function showToast(msg, type) {
+            toast.textContent = msg;
+            toast.classList.remove('success', 'error');
+            if (type) toast.classList.add(type);
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove('show'), 3500);
+        }
+
+        // ===== CONTACT FORM (#2) — отправка через FormSubmit.co =====
+        const contactForm = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+
+        contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
+
             const name = document.getElementById('name').value.trim();
             const email = document.getElementById('email').value.trim();
             const message = document.getElementById('message').value.trim();
+
             if (!name || !email || !message) {
-                alert('Пожалуйста, заполните все поля.');
+                showToast('Пожалуйста, заполните все поля', 'error');
                 return;
             }
-            alert('Спасибо, ' + name + '! Ваше сообщение отправлено. Я свяжусь с вами в ближайшее время.');
-            this.reset();
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showToast('Проверьте формат email', 'error');
+                return;
+            }
+
+            const originalHTML = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
+
+            try {
+                const formData = new FormData(contactForm);
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    showToast('Спасибо, ' + name + '! Ваше сообщение отправлено', 'success');
+                    contactForm.reset();
+                } else {
+                    throw new Error('Ошибка отправки');
+                }
+            } catch (err) {
+                showToast('Не удалось отправить. Попробуйте позже или напишите на filya7699@yandex.ru', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalHTML;
+            }
         });
 
+        // ===== COUNTERS =====
         const counters = document.querySelectorAll('[data-counter]');
         counters.forEach(counter => {
             const target = parseFloat(counter.dataset.target);
@@ -1561,6 +1664,7 @@
             obs.observe(counter);
         });
 
+        // ===== CHIP GLOW =====
         const chips = document.querySelectorAll('.chip');
         if (chips.length) {
             setInterval(() => {
@@ -1570,6 +1674,7 @@
             }, 1200);
         }
 
+        // ===== REVEAL ANIMATION =====
         const revealEls = document.querySelectorAll(
             '.skill-card, .project-card, .timeline-item, .section-label, .section-title, .section-desc'
         );
@@ -1602,6 +1707,7 @@
             });
         }
 
+        // ===== 3D-TILT =====
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (!prefersReducedMotion) {
             const TILT_MAX = 6;
@@ -1630,6 +1736,7 @@
             });
         }
 
+        // ===== СЕЗОННЫЕ ЛИСТОЧКИ =====
         const leafLayer = document.getElementById('leafLayer');
         const seasonToggle = document.getElementById('seasonToggle');
         const seasonIcon = document.getElementById('seasonIcon');
@@ -1697,6 +1804,7 @@
         });
         applyLeavesState();
 
+        // ===== MAGNETIC =====
         const magneticEls = document.querySelectorAll('.magnetic');
         const MAGNETIC_STRENGTH = 8;
         magneticEls.forEach(el => {
@@ -1713,15 +1821,7 @@
             });
         });
 
-        const toast = document.getElementById('toast');
-        let toastTimer = null;
-        function showToast(msg) {
-            toast.textContent = msg;
-            toast.classList.add('show');
-            clearTimeout(toastTimer);
-            toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
-        }
-
+        // ===== COPY =====
         async function copyToClipboard(text) {
             try {
                 if (navigator.clipboard && window.isSecureContext) {
@@ -1749,17 +1849,18 @@
                 if (ok) {
                     btn.classList.add('copied');
                     btn.innerHTML = '<i class="fas fa-check"></i>';
-                    showToast('Скопировано: ' + text);
+                    showToast('Скопировано: ' + text, 'success');
                     setTimeout(() => {
                         btn.classList.remove('copied');
                         btn.innerHTML = '<i class="fas fa-copy"></i>';
                     }, 1600);
                 } else {
-                    showToast('Не удалось скопировать');
+                    showToast('Не удалось скопировать', 'error');
                 }
             });
         });
 
+        // ===== VCARD =====
         document.getElementById('downloadVCard').addEventListener('click', () => {
             const vcard = [
                 'BEGIN:VCARD',
@@ -1784,7 +1885,7 @@
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
-            showToast('vCard скачана');
+            showToast('vCard скачана', 'success');
         });
     </script>
 
