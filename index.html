@@ -1304,6 +1304,11 @@
                     <p>Smoke, регресс, интеграционное</p>
                 </div>
                 <div class="skill-card tilt-card">
+                    <div class="icon"><i class="fas fa-diagram-project"></i></div>
+                    <h4>Тест-анализ</h4>
+                    <p>Анализ требований, декомпозиция на проверки</p>
+                </div>
+                <div class="skill-card tilt-card">
                     <div class="icon"><i class="fas fa-plug"></i></div>
                     <h4>API тестирование</h4>
                     <p>REST, JSON, Swagger, Postman</p>
@@ -1397,7 +1402,6 @@
                     </div>
                 </div>
 
-                <!-- ===== ФОРМА: Web3Forms (латинские поля) ===== -->
                 <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
                     <input type="hidden" name="access_key" value="b4e3a5da-dcde-4678-98b4-1d84ec56dac7" />
                     <input type="hidden" name="subject" value="Новое сообщение с портфолио" />
@@ -1551,7 +1555,7 @@
             toastTimer = setTimeout(() => toast.classList.remove('show'), 3500);
         }
 
-        // ===== CONTACT FORM — отправка через Web3Forms =====
+        // ===== CONTACT FORM — Web3Forms =====
         const contactForm = document.getElementById('contactForm');
         const submitBtn = document.getElementById('submitBtn');
 
