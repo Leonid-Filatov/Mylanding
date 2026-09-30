@@ -1397,11 +1397,12 @@
                     </div>
                 </div>
 
-                <form class="contact-form" id="contactForm" action="https://formsubmit.co/ajax/filya7699@yandex.ru" method="POST" novalidate>
-                    <input type="hidden" name="_subject" value="Новое сообщение с портфолио" />
-                    <input type="hidden" name="_template" value="table" />
-                    <input type="hidden" name="_captcha" value="false" />
-                    <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+                <!-- ===== ФОРМА: Web3Forms ===== -->
+                <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
+                    <!-- Твой Access Key -->
+                    <input type="hidden" name="access_key" value="53644a70-de20-4f37-9ec9-d32144acf043" />
+                    <input type="hidden" name="subject" value="Новое сообщение с портфолио" />
+                    <input type="hidden" name="from_name" value="Портфолио Леонида" />
 
                     <div class="form-group">
                         <label for="name">Ваше имя</label>
@@ -1551,7 +1552,7 @@
             toastTimer = setTimeout(() => toast.classList.remove('show'), 3500);
         }
 
-        // ===== CONTACT FORM — отправка через FormSubmit.co =====
+        // ===== CONTACT FORM — отправка через Web3Forms =====
         const contactForm = document.getElementById('contactForm');
         const submitBtn = document.getElementById('submitBtn');
 
@@ -1583,11 +1584,13 @@
                     headers: { 'Accept': 'application/json' }
                 });
 
-                if (response.ok) {
+                const data = await response.json();
+
+                if (data.success) {
                     showToast('Спасибо, ' + name + '! Ваше сообщение отправлено', 'success');
                     contactForm.reset();
                 } else {
-                    throw new Error('Ошибка ' + response.status);
+                    throw new Error(data.message || 'Ошибка отправки');
                 }
             } catch (err) {
                 showToast('Не удалось отправить. Попробуйте позже или напишите на filya7699@yandex.ru', 'error');
